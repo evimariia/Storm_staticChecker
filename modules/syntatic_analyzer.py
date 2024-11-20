@@ -2,7 +2,6 @@ import lexical_analyzer
 import symbol_table
 
 global atoms
-global symbolTable
 
 # Defines the language's atoms list
 atoms = {
@@ -67,12 +66,6 @@ atoms = {
     'D03': 'subMáquina3'
     # Add others subMáquinas here if it's necessary
 }
-
-# Create a empty symbol table for each source text analyzed
-symbolTable = [
-    ['atom', 'code', 'line', 'type'],
-    []
-]
 
 def extractExtension():
     return None
