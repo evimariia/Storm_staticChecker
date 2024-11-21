@@ -5,6 +5,9 @@ import symbol_table
 
 global atoms
 
+file1 = r'C:\Users\evila\OneDrive\Documentos\teste1.242'
+file2 = r'C:\Users\evila\OneDrive\Documentos\Anexo II - PIBIT - Évila Carneiro - Documentos Google.pdf'
+
 # Defines the language's atoms list
 atoms = {
     'cód': 'Átomo',
@@ -70,23 +73,26 @@ atoms = {
 }
 
 def extractExtension(file):
-
     if file is None:
         return None
     
     validExtension = '.242'
-    extension = os.path.splitext(file)[1]
-
     try:
-        if extension == validExtension:
-            return True
-        else:
-            return False
+        extension = os.path.splitext(file)[1]
     except:
-        return None
+        extension = None
 
-def opeFile():
+    if extension == validExtension:
+        return True
+    else:
+        print(f'Extension not supported: {extension}')
+        return False 
+
+def openFile():
     return None
 
 def createSyntaticTree():
     return None
+
+print(extractExtension(file1))
+print(extractExtension(file2))
