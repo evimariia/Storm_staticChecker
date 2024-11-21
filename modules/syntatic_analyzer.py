@@ -1,12 +1,10 @@
 import os
+import argparse
 
 import lexical_analyzer
 import symbol_table
 
 global atoms
-
-file1 = r'C:\Users\evila\OneDrive\Documentos\teste1.242'
-file2 = r'C:\Users\evila\OneDrive\Documentos\Anexo II - PIBIT - Évila Carneiro - Documentos Google.pdf'
 
 # Defines the language's atoms list
 atoms = {
@@ -85,14 +83,30 @@ def extractExtension(file):
     if extension == validExtension:
         return True
     else:
-        print(f'Extension not supported: {extension}')
         return False 
 
-def openFile():
-    return None
+def openFile(file_path):
+
+    if extractExtension(file_path) == True:
+        try:
+            with open(file_path, 'r') as file:
+                return file.read()
+
+        except FileNotFoundError:
+            print(f"File not founded.")
+
+        except Exception as e:
+            print(f"Exception ocurred: {e}")
+    else:
+        print(f'File not supported')
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Processa um arquivo de texto.")
+    parser.add_argument("file", help="Caminho do arquivo a ser processado")
+    args = parser.parse_args()
+
+    openFile(args.file)
+
 
 def createSyntaticTree():
     return None
-
-print(extractExtension(file1))
-print(extractExtension(file2))
