@@ -1,3 +1,5 @@
+import os
+
 import lexical_analyzer
 import symbol_table
 
@@ -67,8 +69,21 @@ atoms = {
     # Add others subMáquinas here if it's necessary
 }
 
-def extractExtension():
-    return None
+def extractExtension(file):
+
+    if file is None:
+        return None
+    
+    validExtension = '.242'
+    extension = os.path.splitext(file)[1]
+
+    try:
+        if extension == validExtension:
+            return True
+        else:
+            return False
+    except:
+        return None
 
 def opeFile():
     return None
