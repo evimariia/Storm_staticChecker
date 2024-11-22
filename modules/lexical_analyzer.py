@@ -1,4 +1,4 @@
-import syntatic_analyzer
+import modules.syntatic_analyzer
 
 def scan():
     return 0

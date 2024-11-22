@@ -1,8 +1,8 @@
 import os
 import argparse
 
-import lexical_analyzer
-import symbol_table
+import modules.lexical_analyzer
+import modules.symbol_table
 
 global atoms
 
@@ -99,13 +99,6 @@ def openFile(file_path):
             print(f"Exception ocurred: {e}")
     else:
         print(f'File not supported')
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Processa um arquivo de texto.")
-    parser.add_argument("file", help="Caminho do arquivo a ser processado")
-    args = parser.parse_args()
-
-    openFile(args.file)
 
 
 def createSyntaticTree():
