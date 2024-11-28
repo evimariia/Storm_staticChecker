@@ -1,4 +1,4 @@
-import lexical_analyzer
+import modules.lexical_analyzer
 
 global symbolTable
 
