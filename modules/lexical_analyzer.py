@@ -74,12 +74,15 @@ identifiers = {
     'C07': ['variavel']
 }
 
-validTokens =  [
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
-    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+validTokens = [
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     '_', '$', '.', "'", '"', ' '
 ]
+
 
 def extractExtension(file):
     if file is None:
@@ -111,22 +114,33 @@ def openFile(file_path):
     else:
         print(f'File not supported')
 
+def findKeyByValue(dictionary, value):
+    for key, val in dictionary.items():
+        if val == value:
+            return key
+    return None 
+
 def scan(file_path):
     file = openFile(file_path)    
     lineNumber = 0
-    control = {'previous':None, 'actual':None, 'next': None, 'line':lineNumber}
+    control = {'previous':None, 'actual':None, 'next': None, 'line':[]}
+    atom_aux = ''
     atom = ''
     
     for line in file.splitlines():
         lineNumber += 1
-        print(f'Line: {line}')
         for words in line.split():
-            print(f'Words: {words}')
             for letter in list(words):
                 if isValidTokenForLanguage(letter):
                     print('True')
-                    atom += letter
-                    print(f'atomo: {atom}')
+                    atom_aux += letter
+                    atom = atom_aux
+
+                    if isValidTokenForPattern(atom):
+                        atom_aux = ''
+                        atom = ''            
+                    
+                print(f'atomo: {atom}')
 
     print(file.splitlines())
 
@@ -139,8 +153,18 @@ def isValidTokenForLanguage(caracter):
     else:
         return False
 
-def isValidTokenForPattern():
-    return False
+def isValidTokenForPattern(atom):
+    for value in reservedWordsAndSymbols.values():
+        if atom == value:
+            print(value)
+            atomCode = findKeyByValue(reservedWordsAndSymbols, atom)
+            return atomCode
+            break
+        elif isinstance(atom, str):
+            pass
 
 def generateLexicalReport():
     return None
+
+file_path = r"C:\Users\evila\OneDrive\Documentos\teste1.242"
+scan(file_path)
