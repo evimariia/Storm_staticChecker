@@ -59,7 +59,6 @@ reservedWordsAndSymbols = {
     'D01': 'subMáquina1',
     'D02': 'subMáquina2',
     'D03': 'subMáquina3'
-    # Add others subMáquinas here if it's necessary
 }
 
 #consCadeia começa e termina com aspas duplas
@@ -85,6 +84,8 @@ validTokens = [
     '*', '/', '+', '!', '<', '>'
 ]
 
+delimitador = {' ', '\n', '\t', ';', '(', ')', '{', '}', ',', '+', '-', '*', '/', '=', '<', '>', '!', '&', '|'}
+   
 
 def extractExtension(file):
     if file is None:
@@ -123,28 +124,49 @@ def findKeyByValue(dictionary, value):
     return None 
 
 def scan(file_path):
-    file = openFile(file_path)    
+    file = openFile(file_path)
     lineNumber = 0
-    control = {'previous':None, 'actual':None, 'next': None, 'line':[]}
     atom_aux = ''
     atom = ''
-    
+
     for line in file.splitlines():
         lineNumber += 1
         for words in line.split():
-            for letter in list(words):
+            word_length = len(words)
+            i = 0
+            while i < word_length:
+                letter = words[i]
+                next_letter = words[i + 1] if i + 1 < word_length else None  
+
+                # Verifica se a letra atual é válida
                 if isValidTokenForLanguage(letter):
-                    print('True')
                     atom_aux += letter
                     atom = atom_aux
+                else:
+                    print("False")
 
-                    if isValidTokenForPattern(atom):
-                        atom_aux = ''
-                        atom = ''            
-                    
-                print(f'atomo: {atom}')
+                # Verifica se o próximo caractere é válido
+                if next_letter and isValidTokenForLanguage(next_letter):
+                    atom_seguinte = atom + next_letter
+                else:
+                    atom_seguinte = None  # Reseta se o próximo caractere não for válido
+
+                # Verifica se a sequência atual forma um átomo válido
+                if atom_seguinte and isValidTokenForPattern(atom_seguinte):
+                    print(f'Proximo: Atomo valido identificado: {atom_seguinte}')
+                    atom_aux = ''
+                    atom = ''  
+                    atom_seguinte = ''
+                    i += 1  # Avança o índice manualmente para pular para o próximo caractere
+                elif isValidTokenForPattern(atom):
+                    print(f'Atual: Atomo valido identificado: {atom}')
+                    atom_aux = ''
+                    atom = '' 
+                
+                i += 1  # Avança o índice para a próxima letra
 
     print(file.splitlines())
+
 
 def lexicalAnalyze():
     return 0
@@ -168,5 +190,5 @@ def isValidTokenForPattern(atom):
 def generateLexicalReport():
     return None
 
-file_path = r"C:\Users\evila\OneDrive\Documentos\teste1.242"
+file_path = r"C:\Users\reisb\OneDrive\Documentos\teste.242"
 scan(file_path)
