@@ -1,6 +1,6 @@
 #import modules.syntatic_analyzer
 import os
-import argparse
+import re
 
 global reservedWordsAndSymbols
 global identifiers
@@ -85,6 +85,25 @@ validTokens = [
     '*', '/', '+', '!', '<', '>'
 ]
 
+def check_type(atomo):
+    possivel_cadeia = r'^"|"[A-Za-z0-9]*"$'
+    possivel_caracter = r"^'|'[A-Z']'$"
+    possivel_num_inteiro = r'^[0-9]+$'
+    possivel_num_real = r'^[+-]?(\d+((,\d+)+)?|\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$'
+    possivel_variavel = r'^[A-Za-z0-9]+$'
+
+    if re.match(possivel_cadeia, atomo):
+        return True, "C01", "cadeia"
+    if re.match(possivel_caracter, atomo):
+        return True, "C02", "caracter"
+    if re.match(possivel_num_inteiro, atomo):
+        return True, "C03", "inteiro"
+    if re.match(possivel_num_real, atomo):
+        return True, "C04", "real"
+    if re.match(possivel_variavel, atomo):
+        return True, "C07", "variavel"
+    else:
+        return True, "C07", "variavel"
 
 def extractExtension(file):
     if file is None:
@@ -107,6 +126,7 @@ def openFile(file_path):
         try:
             with open(file_path, 'r') as file:
                 return file.read()
+            file.close()
 
         except FileNotFoundError:
             print(f"File not founded.")
@@ -126,6 +146,7 @@ def scan(file_path):
     file = openFile(file_path)    
     lineNumber = 0
     control = {'previous':None, 'actual':None, 'next': None, 'line':[]}
+    list_atoms = []
     atom_aux = ''
     atom = ''
     
@@ -134,17 +155,44 @@ def scan(file_path):
         for words in line.split():
             for letter in list(words):
                 if isValidTokenForLanguage(letter):
-                    print('True')
                     atom_aux += letter
                     atom = atom_aux
 
-                    if isValidTokenForPattern(atom):
+                    '''if letter == ' ' or letter == '\n':
+                        list_atoms.append(atom)
                         atom_aux = ''
-                        atom = ''            
-                    
-                print(f'atomo: {atom}')
+                        atom = ''
+                        break'''
 
-    print(file.splitlines())
+            control['actual'] = atom
+
+            if isValidTokenForPattern(str(control['actual']) + atom_aux):
+                atom = str(control['actual']) + atom_aux
+                list_atoms.append(atom)
+
+            elif isValidTokenForPattern(atom):
+                list_atoms.append(atom)
+                control['previous'] = atom
+                atom_aux = ''
+                atom = ''
+    
+            if atom != None and atom != '' and atom != '\n' and atom != '\t':
+                list_atoms.append(atom) 
+
+            if (atom != None) and (atom in list_atoms) and (atom not in reservedWordsAndSymbols.values()):
+                print(type(atom))
+                tipo = check_type(atom)[1]
+                existed = any(atom in lista for lista in identifiers.values())
+                if not existed in identifiers:
+                    identifiers[tipo].append(atom)
+                control['previous'] = atom
+
+            
+            atom_aux = ''
+            atom = ''  
+
+        print(f'atomo: {atom}')
+    print('cabou')
 
 def lexicalAnalyze():
     return 0
@@ -160,7 +208,7 @@ def isValidTokenForPattern(atom):
         if atom == value:
             print(value)
             atomCode = findKeyByValue(reservedWordsAndSymbols, atom)
-            return atomCode
+            return True
             break
         elif isinstance(atom, str):
             pass
