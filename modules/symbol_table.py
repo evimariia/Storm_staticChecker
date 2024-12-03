@@ -2,32 +2,43 @@ import os
 import re
 from lexical_analyzer import reservedWordsAndSymbols
 
-# Lista para armazenar a tabela de símbolos
+global symbolTable
+
 symbolTable = [
     ['atom', 'code', 'line', 'type', 'qtdeBeforetrunk', 'qtdeAfterTrunk']
 ]
 
-# Adiciona um símbolo à tabela
 def add_symbol_to_table(atom, code, line_number, atom_type, qtdeBeforeTrunk, qtdeAfterTrunk):
     for entry in symbolTable:
         if entry and entry[0] == atom:
-            # Atualiza as linhas em que o átomo aparece, se necessário
-            if line_number not in entry[2]:
-                entry[2].append(line_number)
             return
     
-    # Se o átomo não existir, adiciona uma nova entrada
     new_entry = [
         atom,
         code,
-        [line_number],  # Lista com as linhas
+        [line_number], 
         atom_type,
         qtdeBeforeTrunk, 
         qtdeAfterTrunk
     ]
     symbolTable.append(new_entry)
 
-# Função para gerar o relatório da tabela de símbolos
+def update_atom_code(atom, code):
+    for entry in symbolTable:
+        if entry and entry[0] == atom:
+                entry[1] = code
+
+def update_atom_type(atom, atom_type):
+    for entry in symbolTable:
+        if entry and entry[0] == atom:
+                entry[3] = atom_type
+
+def update_atom_lines(atom, line_number):
+    for entry in symbolTable:
+        if entry and entry[0] == atom:
+            if line_number not in entry[2]:
+                entry[2] = line_number
+
 def generate_symbol_table_report(file_path):
     base_name = os.path.basename(file_path).split('.')[0]
     filename = f"./results/{base_name}_symbol_table.txt"
