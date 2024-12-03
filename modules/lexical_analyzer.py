@@ -1,4 +1,4 @@
-#import modules.syntatic_analyzer
+#from modules.syntatic_analyzer import isValidTokenForLanguage, isValidTokenForPattern
 import os
 import re
 
@@ -85,12 +85,15 @@ validTokens = [
     '*', '/', '+', '!', '<', '>'
 ]
 
+sei_la = ['$', '.', "'", '"', ' ', '%', '(', ')', ',', ';', '?', '[', ']', '{', '}', '-', '*', '/', '+', '!']
+
+possivel_cadeia = r'^"|"[A-Za-z0-9]*"$'
+possivel_caracter = r"^'|'[A-Z']'$"
+possivel_num_inteiro = r'^[0-9]+$'
+possivel_num_real = r'^[+-]?(\d+((,\d+)+)?|\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$'
+possivel_variavel = r'^[A-Za-z0-9]+$'
+
 def check_type(atomo):
-    possivel_cadeia = r'^"|"[A-Za-z0-9]*"$'
-    possivel_caracter = r"^'|'[A-Z']'$"
-    possivel_num_inteiro = r'^[0-9]+$'
-    possivel_num_real = r'^[+-]?(\d+((,\d+)+)?|\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$'
-    possivel_variavel = r'^[A-Za-z0-9]+$'
 
     if re.match(possivel_cadeia, atomo):
         return True, "C01", "cadeia"
@@ -158,12 +161,6 @@ def scan(file_path):
                     atom_aux += letter
                     atom = atom_aux
 
-                    '''if letter == ' ' or letter == '\n':
-                        list_atoms.append(atom)
-                        atom_aux = ''
-                        atom = ''
-                        break'''
-
             control['actual'] = atom
 
             if isValidTokenForPattern(str(control['actual']) + atom_aux):
@@ -176,11 +173,10 @@ def scan(file_path):
                 atom_aux = ''
                 atom = ''
     
-            if atom != None and atom != '' and atom != '\n' and atom != '\t':
+            if (atom != None) and (atom != '') and (atom != '\n') and (atom != '\t') and (atom not in reservedWordsAndSymbols.values()):
                 list_atoms.append(atom) 
 
             if (atom != None) and (atom in list_atoms) and (atom not in reservedWordsAndSymbols.values()):
-                print(type(atom))
                 tipo = check_type(atom)[1]
                 existed = any(atom in lista for lista in identifiers.values())
                 if not existed in identifiers:
@@ -191,8 +187,7 @@ def scan(file_path):
             atom_aux = ''
             atom = ''  
 
-        print(f'atomo: {atom}')
-    print('cabou')
+    print(f'atomo: {atom}')
 
 def lexicalAnalyze():
     return 0
