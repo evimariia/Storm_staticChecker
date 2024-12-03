@@ -2,8 +2,6 @@ import os
 import re
 from lexical_analyzer import reservedWordsAndSymbols
 
-global symbolTable
-
 symbolTable = [
     ['atom', 'code', 'line', 'type', 'qtdeBeforetrunk', 'qtdeAfterTrunk']
 ]
