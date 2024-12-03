@@ -189,6 +189,22 @@ def scan(file_path):
 
     print(f'atomo: {atom}')
 
+def alternate_scan(file_path):
+    file = openFile(file_path)    
+    lineNumber = 0
+    control = {'previous':None, 'actual':None, 'next': None, 'line':[]}
+    list_atoms = []
+    atom_aux = ''
+    atom = ''
+    
+    for line in file.splitlines():
+        lineNumber += 1
+        for words in line.split():
+            for letter in list(words):
+                pass  
+
+    print(f'atomo: {atom}')
+
 def lexicalAnalyze():
     return 0
 
