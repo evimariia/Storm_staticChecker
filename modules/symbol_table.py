@@ -1,6 +1,6 @@
 import os
 import re
-from lexical_analyzer import reservedWordsAndSymbols
+from syntatic_analyzer import reservedWordsAndSymbols, identifiers
 
 symbolTable = [
     ['atom', 'code', 'line', 'type', 'qtdeBeforetrunk', 'qtdeAfterTrunk']
@@ -20,6 +20,11 @@ def add_symbol_to_table(atom, code, line_number, atom_type, qtdeBeforeTrunk, qtd
         qtdeAfterTrunk
     ]
     symbolTable.append(new_entry)
+
+def atom_in_table(atom):
+     for entry in symbolTable:
+        if entry and entry[0] == atom:
+            return True
 
 def update_atom_code(atom, code):
     for entry in symbolTable:
