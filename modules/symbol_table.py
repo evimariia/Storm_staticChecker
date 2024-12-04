@@ -53,3 +53,23 @@ def generate_symbol_table_report(file_path):
         for entry in symbolTable:
             f.write(f"{entry['lexeme']:<20} {entry['type']:<15} {entry['lines']}\n")
     print(f"Relatório gerado em {filename}")
+
+def searchSymbol(symbol, cod):    
+    found = 0
+    for code in symbolTable:
+        if cod[0] == "C" and code[0] == cod and code[0] == symbol:
+            found = 1
+            break
+        elif code[0] == symbol and code[1] == cod:
+             found = 1
+             break
+
+    if found == 1:
+         return True
+    else:
+         return False
+        
+add_symbol_to_table('programa', 'A17', [], None, None, None)
+add_symbol_to_table('samplix', 'C01', [], None, None, None)
+print(searchSymbol('programa', 'A17'))
+print(searchSymbol('programa', 'C01'))
