@@ -2,8 +2,6 @@ import os
 import re
 from syntatic_analyzer import reservedWordsAndSymbols, identifiers
 
-global symbolTable
-
 symbolTable = [
     ['atom', 'code', 'line', 'type', 'qtdeBeforetrunk', 'qtdeAfterTrunk']
 ]
