@@ -204,14 +204,38 @@ def process_atom(atom, lineNumber, list_atoms):
     if not is_valid:
         print(f"Atomo inválido encontrado: {atom}")
         return
+    else:
+        is
     if atom not in list_atoms:
         list_atoms[atom] = [lineNumber]
     else:
         list_atoms[atom].append(lineNumber)
     if not atom_in_table(atom):
+        if atom_code == "C07":
+            print(atom_code)
+            #atom = truncagem(atom)
         add_symbol_to_table(atom, atom_code, list_atoms[atom], atom_type, len(atom), len(atom))
     else:
         update_atom_lines(atom, lineNumber)
+
+def truncagem(atom_string, max_length=30):
+    valid_chars = ""  
+    count = 0         
+    is_valid = True   
+
+    for char in atom_string:
+        if count < max_length:  
+            valid_chars += char
+            count += 1
+        else:
+            if is_delimiter(char):  
+                break
+            
+    if is_number(valid_chars) and not is_valid_number(valid_chars):
+        valid_chars = fix_number(valid_chars)
+
+    return valid_chars
+
 
 def lexicalAnalyze():
     return 0
