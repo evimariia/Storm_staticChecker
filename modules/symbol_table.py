@@ -14,7 +14,7 @@ def add_symbol_to_table(atom, code, line_number, atom_type, qtdeBeforeTrunk, qtd
     new_entry = [
         atom,
         code,
-        [line_number], 
+        line_number, 
         atom_type,
         qtdeBeforeTrunk, 
         qtdeAfterTrunk

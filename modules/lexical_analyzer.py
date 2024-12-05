@@ -3,6 +3,9 @@ from symbol_table import add_symbol_to_table, atom_in_table, update_atom_lines
 import os
 import re
 
+global list_atoms
+list_atoms = {'atom':'lines'}
+
 validTokens = [
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
@@ -118,9 +121,8 @@ def scan(file_path):
 
     print(f'atomo: {atom}')
 
-def test_string(atom):
-    if atom == '"':
-        return True
+def test_string(letter):
+    return letter == '"'
 
 def test_caracter(atom):
     if atom == "'":
@@ -139,44 +141,108 @@ def test_special_caracter(atom):
     if atom in caracteres:
         return True
 
+def add_to_dict(key, value):
+    if key not in list_atoms:
+        list_atoms[key] = []
+    list_atoms[key].append(value)
+
+
 def alternate_scan(file_path):
-    file = openFile(file_path)    
+    file = openFile(file_path)
     lineNumber = 0
-    control = {'previous':None, 'actual':None, 'next': None, 'line':[]}
-    list_atoms = {'atom':'lines'}
-    atom_aux = ''
     atom = ''
+    flag_string = False
     
     for line in file.splitlines():
         lineNumber += 1
-        for words in line.split():
-            for letter in list(words):
-                if letter != '' and letter != '\n' and letter != '\t':
+        skip_line = False
 
-                    if test_special_caracter(letter):
-                        list_atoms[atom].append(lineNumber)
+        for i, letter in enumerate(line):
+            if skip_line:
+                break
 
+            # Tratamento de strings
+            if test_string(letter):
+                if flag_string:
+                    atom += letter
+                    add_to_dict(atom, lineNumber)
+                    if not atom_in_table(atom):
+                        add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+                    else:
+                        update_atom_lines(atom, list_atoms[atom])
+                    atom = ''
+                else:
+                    if atom:
+                        add_to_dict(atom, lineNumber)
                         if not atom_in_table(atom):
                             add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
                         else:
                             update_atom_lines(atom, list_atoms[atom])
-
-                        atom = letter
-                        list_atoms.append(atom)
-                        add_symbol_to_table(atom, None, None, None, None, None)
                         atom = ''
+                    atom += letter
+                flag_string = not flag_string
+                continue
 
-                    else:       
-                        atom += letter
-                else:
+            if flag_string:
+                atom += letter
+                continue
+
+            if letter != '' and letter != '\n' and letter != '\t':
+                if test_short_comment(atom):
+                    atom += line[i:]  
+                    skip_line = True
+                    break 
+
+                if test_special_caracter(letter):
+                    if atom:
+                        add_to_dict(atom, lineNumber)
+                        if not atom_in_table(atom):
+                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+                        else:
+                            update_atom_lines(atom, list_atoms[atom])
+                    atom = letter
+                    add_to_dict(atom, lineNumber)
+                    if not atom_in_table(atom):
+                        add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+                    else:
+                        update_atom_lines(atom, list_atoms[atom])
                     atom = ''
+                
+                elif letter == ' ':
+                    if atom:
+                        add_to_dict(atom, lineNumber)
+                        if not atom_in_table(atom):
+                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+                        else:
+                            update_atom_lines(atom, list_atoms[atom])
+                        atom = ''
+                elif letter == ',' or letter == ';':
+                    if atom:
+                        add_to_dict(atom, lineNumber)
+                        if not atom_in_table(atom):
+                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+                        else:
+                            update_atom_lines(atom, list_atoms[atom])
+                    atom = letter
+                    add_to_dict(atom, lineNumber)
+                    if not atom_in_table(atom):
+                        add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+                    else:
+                        update_atom_lines(atom, list_atoms[atom])
+                    atom = ''
+                else:       
+                    atom += letter
 
-            list_atoms.append(atom)
-            add_symbol_to_table(atom, None, None, None, None, None)
-            atom_aux = ''
-            atom = ''  
+        if atom:
+            add_to_dict(atom, lineNumber)
+            if not atom_in_table(atom):
+                add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+            else:
+                update_atom_lines(atom, list_atoms[atom])
+            atom = ''
 
-    print(f'atomo: {atom}')
+    print(f'atomo: {list_atoms.keys()}')
+
 
 def lexicalAnalyze():
     return 0
@@ -200,4 +266,4 @@ def generateLexicalReport():
     return None
 
 file_path = r"C:\Users\evila\OneDrive\Documentos\teste1.242"
-alternate_scan(file_path)
+#alternate_scan(file_path)
