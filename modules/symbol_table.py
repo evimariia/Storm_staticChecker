@@ -39,7 +39,7 @@ def update_atom_type(atom, atom_type):
 def update_atom_lines(atom, line_number):
     for entry in symbolTable:
         if entry and entry[0] == atom:
-            if line_number not in entry[2]:
+            if line_number not in entry[2] and len(entry[2]) <= 5:
                 entry[2] = line_number
 
 def generate_symbol_table_report(file_path):

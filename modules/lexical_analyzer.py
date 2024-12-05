@@ -146,6 +146,13 @@ def add_to_dict(key, value):
         list_atoms[key] = []
     list_atoms[key].append(value)
 
+def process_atom(atom, lineNumber):
+    if atom:
+        add_to_dict(atom, lineNumber)
+        if not atom_in_table(atom):
+            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+        else:
+            update_atom_lines(atom, list_atoms[atom])
 
 def alternate_scan(file_path):
     file = openFile(file_path)
@@ -161,25 +168,20 @@ def alternate_scan(file_path):
             if skip_line:
                 break
 
-            # Tratamento de strings
-            if test_string(letter):
-                if flag_string:
+            if test_string(letter): # Verifies if the letter is the start or the end of a string by detecting " caracter
+
+                if flag_string: # If it's inside a string it keeps constructing the atom until another " is detected
                     atom += letter
-                    add_to_dict(atom, lineNumber)
-                    if not atom_in_table(atom):
-                        add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                    else:
-                        update_atom_lines(atom, list_atoms[atom])
+                    process_atom(atom, lineNumber)
                     atom = ''
+
                 else:
+
                     if atom:
-                        add_to_dict(atom, lineNumber)
-                        if not atom_in_table(atom):
-                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                        else:
-                            update_atom_lines(atom, list_atoms[atom])
+                        process_atom(atom, lineNumber)
                         atom = ''
                     atom += letter
+
                 flag_string = not flag_string
                 continue
 
@@ -194,51 +196,26 @@ def alternate_scan(file_path):
                     break 
 
                 if test_special_caracter(letter):
-                    if atom:
-                        add_to_dict(atom, lineNumber)
-                        if not atom_in_table(atom):
-                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                        else:
-                            update_atom_lines(atom, list_atoms[atom])
+                    process_atom(atom, lineNumber)
                     atom = letter
-                    add_to_dict(atom, lineNumber)
-                    if not atom_in_table(atom):
-                        add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                    else:
-                        update_atom_lines(atom, list_atoms[atom])
+                    process_atom(atom, lineNumber)
                     atom = ''
                 
                 elif letter == ' ':
                     if atom:
-                        add_to_dict(atom, lineNumber)
-                        if not atom_in_table(atom):
-                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                        else:
-                            update_atom_lines(atom, list_atoms[atom])
+                        process_atom(atom, lineNumber)
                         atom = ''
                 elif letter == ',' or letter == ';':
                     if atom:
-                        add_to_dict(atom, lineNumber)
-                        if not atom_in_table(atom):
-                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                        else:
-                            update_atom_lines(atom, list_atoms[atom])
+                        process_atom(atom, lineNumber)
                     atom = letter
-                    add_to_dict(atom, lineNumber)
-                    if not atom_in_table(atom):
-                        add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                    else:
-                        update_atom_lines(atom, list_atoms[atom])
+                    process_atom(atom, lineNumber)
                     atom = ''
                 else:       
                     atom += letter
 
         if atom:
-            add_to_dict(atom, lineNumber)
-            if not atom_in_table(atom):
-                add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-            else:
-                update_atom_lines(atom, list_atoms[atom])
+            process_atom(atom, lineNumber)
             atom = ''
 
     print(f'atomo: {list_atoms.keys()}')
@@ -266,4 +243,4 @@ def generateLexicalReport():
     return None
 
 file_path = r"C:\Users\evila\OneDrive\Documentos\teste1.242"
-#alternate_scan(file_path)
+alternate_scan(file_path)
