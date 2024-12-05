@@ -3,24 +3,32 @@ import re
 from syntatic_analyzer import reservedWordsAndSymbols, identifiers, header, divider
 
 symbolTable = [
-    ['atom', 'code', 'line', 'type', 'qtdeBeforetrunk', 'qtdeAfterTrunk']
+    ['atom', 'code', 'line', 'type', 'qtdeBeforetrunk', 'qtdeAfterTrunk', 0],
+    ['programa', 'A17', 1, 'reservedWord', 7, 7, 1],
+    ['samplix', 'C07', [1, 3], 'consCadeia', 7, 7, 2],
+    ['samplix', 'E22', 2, 'votavotaeconfirma', 7, 7, 3]
 ]
 
+indice = 0
+
 def add_symbol_to_table(atom, code, line_number, atom_type, qtdeBeforeTrunk, qtdeAfterTrunk):
-    for entry in symbolTable:
+    '''for entry in symbolTable:
         if entry and entry[0] == atom:
-            return
+            return'''
     
     #if (searchSymbol(atom, code)==False):
-        new_entry = [
+    global indice
+    indice += 1
+    new_entry = [
             atom,
             code,
             line_number, 
             atom_type,
             qtdeBeforeTrunk, 
-            qtdeAfterTrunk
+            qtdeAfterTrunk,
+            indice
         ]
-        symbolTable.append(new_entry)
+    symbolTable.append(new_entry)
     #else:
         #update_atom_lines(atom, line_number)
 
@@ -59,25 +67,32 @@ def searchSymbol(symbol, cod):
          return True
     else:
          return False
+
+def getIndex(symbol, code):
+    for entry in symbolTable:
+        if (entry[0] == symbol and entry[1] == code):
+            return entry[6]
     
 def generate_symbol_table_report(file_path):
     #esse indice é uma solução temporária, deveria estar no addSymbol
-    index=0
+    #index=0
     base_name = os.path.basename(file_path).split('.')[0]
     filename = f"./results/{base_name}_symbol_table.TAB"
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     
     with open(filename, 'w', encoding='utf-8') as f:
         f.write(f"{header}\nRELATÓRIO DA TABELA DE SÍMBOLOS - {file_path}\n\n")
+        #f.write(f"{'Lexeme':<20} {'Code':<15} {'Lines'} {'Type'} {'BeforeTrunk'} {'AfterTrunk'}\n")
         for entry in symbolTable:
-            if (index > 0):
-                f.write(f"""Entrada: {index}, Código: {entry[1]}, Lexeme: {entry[0]}
+            if (entry[6] > 0):
+                f.write(f"""Entrada: {entry[6]}, Código: {entry[1]}, Lexeme: {entry[0]}
 Pré-truncagem: {entry[4]}, Pós-truncagem: {entry[5]}
 Tipo: {entry[3]}, Linhas: {entry[2]}\n{divider}""")
-            index +=1
+            #index +=1
     print(f"Relatório gerado em {filename}")
         
-#file_path = r"C:\Users\Bruno\Storm_staticChecker\teste.242"
+file_path = r"C:\Users\Bruno\Storm_staticChecker\teste.242"
 #add_symbol_to_table('programa', 'A17', [1,1,2], "ReservedWord", 8, 8)
 #add_symbol_to_table('samplix', 'C01', [2,2,2], "ConsCadeia", 7, 7)
-#generate_symbol_table_report(file_path)
+#update_atom_lines('samplix', 3)
+generate_symbol_table_report(file_path)
