@@ -146,46 +146,72 @@ def test_special_caracter(atom):
     caracteres = ['(', ')', '[', ']', '{', '}']
     if atom in caracteres:
         return True
+    
+def filter_comments(file_content):
+    filtered_content = ""
+    i = 0
+    length = len(file_content)
+
+    while i < length:
+        if file_content[i:i+2] == "/*":
+            i += 2
+            while i < length and file_content[i:i+2] != "*/":
+                i += 1
+            i += 2 if i < length else 0
+        elif file_content[i:i+2] == "//":
+            i += 2
+            while i < length and file_content[i] != "\n":
+                i += 1
+        else:
+            filtered_content += file_content[i]
+            i += 1
+    return filtered_content
+
 
 def alternate_scan(file_path):
-    file = openFile(file_path)    
+    file = openFile(file_path)
+    if not file:
+        return
+
+    file = filter_comments(file)
     lineNumber = 0
-    control = {'previous':None, 'actual':None, 'next': None, 'line':[]}
-    list_atoms = {'atom':'lines'}
-    atom_aux = ''
+    list_atoms = {}  
     atom = ''
-    
+
     for line in file.splitlines():
         lineNumber += 1
         for words in line.split():
-            for letter in list(words):
-                if letter != '' and letter != '\n' and letter != '\t':
-
-                    if test_special_caracter(letter):
-                        list_atoms[atom].append(lineNumber)
-
-                        if not atom_in_table(atom):
-                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                        else:
-                            update_atom_lines(atom, list_atoms[atom])
-
-                        atom = letter
-                        list_atoms.append(atom)
-                        add_symbol_to_table(atom, None, None, None, None, None)
-                        atom = ''
-
-                    else:       
-                        atom += letter
+            for letter in words:
+                if letter not in ['\n', '\t', '']:  
+                    if test_special_caracter(letter):  
+                        if atom:
+                            process_atom(atom, lineNumber, list_atoms)
+                            atom = ''
+                        process_atom(letter, lineNumber, list_atoms)  
+                    else:
+                        atom += letter  
                 else:
-                    atom = ''
+                    atom = ''  
 
-            list_atoms.append(atom)
-            add_symbol_to_table(atom, None, None, None, None, None)
-            atom_aux = ''
-            atom = ''  
+            if atom:  
+                process_atom(atom, lineNumber, list_atoms)
+                atom = ''
 
-    print(f'atomo: {atom}')
+    print(f"Atomos e linhas: {list_atoms}")
 
+def process_atom(atom, lineNumber, list_atoms):
+    is_valid, atom_code, atom_type = check_type(atom)  
+    if not is_valid:
+        print(f"Atomo inválido encontrado: {atom}")
+        return
+    if atom not in list_atoms:
+        list_atoms[atom] = [lineNumber]
+    else:
+        list_atoms[atom].append(lineNumber)
+    if not atom_in_table(atom):
+        add_symbol_to_table(atom, atom_code, list_atoms[atom], atom_type, len(atom), len(atom))
+    else:
+        update_atom_lines(atom, lineNumber)
 
 def lexicalAnalyze():
     return 0
@@ -209,4 +235,4 @@ def generateLexicalReport():
     return None
 
 file_path = r"C:\Users\reisb\OneDrive\Documentos\teste.242"
-scan(file_path)
+alternate_scan(file_path)
