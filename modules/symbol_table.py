@@ -1,6 +1,5 @@
 import os
 import re
-from syntatic_analyzer import reservedWordsAndSymbols, identifiers
 
 symbolTable = [
     ['atom', 'code', 'line', 'type', 'qtdeBeforetrunk', 'qtdeAfterTrunk']
@@ -30,11 +29,13 @@ def update_atom_code(atom, code):
     for entry in symbolTable:
         if entry and entry[0] == atom:
                 entry[1] = code
+                break
 
 def update_atom_type(atom, atom_type):
     for entry in symbolTable:
         if entry and entry[0] == atom:
                 entry[3] = atom_type
+                break
 
 def update_atom_lines(atom, line_number):
     for entry in symbolTable:

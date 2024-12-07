@@ -3,7 +3,7 @@ import os
 import re
 
 global list_atoms
-list_atoms = {'atom':'lines'}
+list_atoms = {}
 
 validTokens = [
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -15,29 +15,6 @@ validTokens = [
     '%', '(', ')', ',', ':', '=', ';', '?', '[', ']', '{', '}', '-',
     '*', '/', '+', '!', '<', '>'
 ]
-
-sei_la = ['$', '.', "'", '"', ' ', '%', '(', ')', ',', ';', '?', '[', ']', '{', '}', '-', '*', '/', '+', '!']
-
-possivel_cadeia = r'^"|"[A-Za-z0-9]*"$'
-possivel_caracter = r"^'|'[A-Z']'$"
-possivel_num_inteiro = r'^[0-9]+$'
-possivel_num_real = r'^[+-]?(\d+((,\d+)+)?|\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$'
-possivel_variavel = r'^[A-Za-z0-9]+$'
-
-def check_type(atomo):
-
-    if re.match(possivel_cadeia, atomo):
-        return True, "C01", "cadeia"
-    if re.match(possivel_caracter, atomo):
-        return True, "C02", "caracter"
-    if re.match(possivel_num_inteiro, atomo):
-        return True, "C03", "inteiro"
-    if re.match(possivel_num_real, atomo):
-        return True, "C04", "real"
-    if re.match(possivel_variavel, atomo):
-        return True, "C07", "variavel"
-    else:
-        return True, "C07", "variavel"
 
 def extractExtension(file):
     if file is None:
@@ -77,14 +54,6 @@ def test_caracter(atom):
     if atom == "'":
         return True
 
-def test_short_comment(atom):
-    if atom == '//':
-        return True
-
-def test_long_comment(atom):
-    if atom == '/*':
-        return True
-
 def test_special_caracter(atom):
     caracteres = ['(', ')', '[', ']', '{', '}']
     if atom in caracteres:
@@ -103,11 +72,33 @@ def process_atom(atom, lineNumber):
         else:
             update_atom_lines(atom, list_atoms[atom])
 
+def filter_comments(file_content):
+    filtered_content = ""
+    i = 0
+    length = len(file_content)
+
+    while i < length:
+        if file_content[i:i+2] == "/*":
+            i += 2
+            while i < length and file_content[i:i+2] != "*/":
+                i += 1
+            i += 2 if i < length else 0
+        elif file_content[i:i+2] == "//":
+            i += 2
+            while i < length and file_content[i] != "\n":
+                i += 1
+        else:
+            filtered_content += file_content[i]
+            i += 1
+    return filtered_content
+
 def alternate_scan(file_path):
     file = openFile(file_path)
     lineNumber = 0
     atom = ''
     flag_string = False
+
+    file = filter_comments(file)
     
     for line in file.splitlines():
         lineNumber += 1
@@ -125,7 +116,6 @@ def alternate_scan(file_path):
                     atom = ''
 
                 else:
-
                     if atom:
                         process_atom(atom, lineNumber)
                         atom = ''
@@ -138,11 +128,7 @@ def alternate_scan(file_path):
                 atom += letter
                 continue
 
-            if letter != '' and letter != '\n' and letter != '\t':
-                if test_short_comment(atom):
-                    atom += line[i:]  
-                    skip_line = True
-                    break 
+            if letter != '' and letter != '\n' and letter != '\t': 
 
                 if test_special_caracter(letter):
                     process_atom(atom, lineNumber)
@@ -154,6 +140,7 @@ def alternate_scan(file_path):
                     if atom:
                         process_atom(atom, lineNumber)
                         atom = ''
+
                 elif letter == ',' or letter == ';':
                     if atom:
                         process_atom(atom, lineNumber)

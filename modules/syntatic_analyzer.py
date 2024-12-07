@@ -82,23 +82,27 @@ possivel_variavel = r'^[A-Za-z0-9]+$'
 def check_type(atomo):
 
     if re.match(possivel_cadeia, atomo):
-        update_atom_type(atomo, 'C01')
+        update_atom_type(atomo, 'consCadeia')
         identifiers['C01'].append(atomo)
         return True, "C01", "cadeia"
+    
     if re.match(possivel_caracter, atomo):
-        update_atom_type(atomo, 'C02')
+        update_atom_type(atomo, 'consCaracter')
         identifiers['C02'].append(atomo)
         return True, "C02", "caracter"
+    
     if re.match(possivel_num_inteiro, atomo):
-        update_atom_type(atomo, 'C03')
+        update_atom_type(atomo, 'consInteiro')
         identifiers['C03'].append(atomo)
         return True, "C03", "inteiro"
+    
     if re.match(possivel_num_real, atomo):
-        update_atom_type(atomo, 'C04')
+        update_atom_type(atomo, 'consReal')
         identifiers['C04'].append(atomo)
         return True, "C04", "real"
+    
     if re.match(possivel_variavel, atomo):
-        update_atom_type(atomo, 'C07')
+        update_atom_type(atomo, 'variavel')
         identifiers['C07'].append(atomo)
         return True, "C07", "variavel"
     else:
@@ -125,5 +129,6 @@ def classify_atoms(list_atoms):
             update_atom_code(atom, isValidTokenForPattern(atom))
         else:
             check_type(atom)
+    print('fim')
 
 classify_atoms(list_atoms)
