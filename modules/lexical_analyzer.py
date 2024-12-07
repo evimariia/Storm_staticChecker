@@ -1,5 +1,3 @@
-from syntatic_analyzer import reservedWordsAndSymbols, identifiers, header, divider
-from symbol_table import add_symbol_to_table, atom_in_table, update_atom_lines, getIndex
 import os
 import re
 
@@ -9,6 +7,7 @@ list_atoms = {'atom':'lines'}
 LexReport = [
     ['header', 'atom', 'code', 'symbolTableIndex', 'line']
 ]
+
 
 validTokens = [
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -246,7 +245,6 @@ def alternate_scan(file_path):
             atom = ''
 
     print(f'atomo: {list_atoms.keys()}')
-
 
 def lexicalAnalyze():
     return 0

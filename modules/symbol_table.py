@@ -1,12 +1,8 @@
 import os
 import re
-from syntatic_analyzer import reservedWordsAndSymbols, identifiers, header, divider
 
 symbolTable = [
-    ['atom', 'code', 'line', 'type', 'qtdeBeforetrunk', 'qtdeAfterTrunk', 0],
-    ['programa', 'A17', 1, 'reservedWord', 7, 7, 1],
-    ['samplix', 'C07', [1, 3], 'consCadeia', 7, 7, 2],
-    ['samplix', 'E22', 2, 'votavotaeconfirma', 7, 7, 3]
+    ['atom', 'code', 'line', 'type', 'qtdeBeforetrunk', 'qtdeAfterTrunk']
 ]
 
 indice = 0
