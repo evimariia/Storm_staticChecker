@@ -1,13 +1,13 @@
+from symbol_table import add_symbol_to_table, atom_in_table, update_atom_lines
 import os
 import re
 
 global list_atoms
-list_atoms = {'atom':'lines'}
+list_atoms = {}
 
 LexReport = [
     ['header', 'atom', 'code', 'symbolTableIndex', 'line']
 ]
-
 
 validTokens = [
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -19,29 +19,6 @@ validTokens = [
     '%', '(', ')', ',', ':', '=', ';', '?', '[', ']', '{', '}', '-',
     '*', '/', '+', '!', '<', '>'
 ]
-
-sei_la = ['$', '.', "'", '"', ' ', '%', '(', ')', ',', ';', '?', '[', ']', '{', '}', '-', '*', '/', '+', '!']
-
-possivel_cadeia = r'^"|"[A-Za-z0-9]*"$'
-possivel_caracter = r"^'|'[A-Z']'$"
-possivel_num_inteiro = r'^[0-9]+$'
-possivel_num_real = r'^[+-]?(\d+((,\d+)+)?|\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$'
-possivel_variavel = r'^[A-Za-z0-9]+$'
-
-def check_type(atomo):
-
-    if re.match(possivel_cadeia, atomo):
-        return True, "C01", "cadeia"
-    if re.match(possivel_caracter, atomo):
-        return True, "C02", "caracter"
-    if re.match(possivel_num_inteiro, atomo):
-        return True, "C03", "inteiro"
-    if re.match(possivel_num_real, atomo):
-        return True, "C04", "real"
-    if re.match(possivel_variavel, atomo):
-        return True, "C07", "variavel"
-    else:
-        return True, "C07", "variavel"
 
 def extractExtension(file):
     if file is None:
@@ -74,55 +51,50 @@ def openFile(file_path):
     else:
         print(f'File not supported')
 
-def findKeyByValue(dictionary, value):
-    for key, val in dictionary.items():
-        if val == value:
-            return key
-    return None 
+def test_string(letter):
+    return letter == '"'
 
-def scan(file_path):
-    file = openFile(file_path)    
-    lineNumber = 0
-    control = {'previous':None, 'actual':None, 'next': None, 'line':[]}
-    list_atoms = []
-    atom_aux = ''
-    atom = ''
-    
-    for line in file.splitlines():
-        lineNumber += 1
-        for words in line.split():
-            for letter in list(words):
-                if isValidTokenForLanguage(letter):
-                    atom_aux += letter
-                    atom = atom_aux
+def test_caracter(atom):
+    if atom == "'":
+        return True
 
-            control['actual'] = atom
+def test_special_caracter(atom):
+    caracteres = ['(', ')', '[', ']', '{', '}']
+    if atom in caracteres:
+        return True
 
-            if isValidTokenForPattern(str(control['actual']) + atom_aux):
-                atom = str(control['actual']) + atom_aux
-                list_atoms.append(atom)
+def add_to_dict(key, value):
+    if key not in list_atoms:
+        list_atoms[key] = []
+    list_atoms[key].append(value)
 
-            elif isValidTokenForPattern(atom):
-                list_atoms.append(atom)
-                control['previous'] = atom
-                atom_aux = ''
-                atom = ''
-    
-            if (atom != None) and (atom != '') and (atom != '\n') and (atom != '\t') and (atom not in reservedWordsAndSymbols.values()):
-                list_atoms.append(atom) 
+def process_atom(atom, lineNumber):
+    if atom:
+        add_to_dict(atom, lineNumber)
+        if not atom_in_table(atom):
+            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+        else:
+            update_atom_lines(atom, list_atoms[atom])
 
-            if (atom != None) and (atom in list_atoms) and (atom not in reservedWordsAndSymbols.values()):
-                tipo = check_type(atom)[1]
-                existed = any(atom in lista for lista in identifiers.values())
-                if not existed in identifiers:
-                    identifiers[tipo].append(atom)
-                control['previous'] = atom
+def filter_comments(file_content):
+    filtered_content = ""
+    i = 0
+    length = len(file_content)
 
-            
-            atom_aux = ''
-            atom = ''  
-
-    print(f'atomo: {atom}')
+    while i < length:
+        if file_content[i:i+2] == "/*":
+            i += 2
+            while i < length and file_content[i:i+2] != "*/":
+                i += 1
+            i += 2 if i < length else 0
+        elif file_content[i:i+2] == "//":
+            i += 2
+            while i < length and file_content[i] != "\n":
+                i += 1
+        else:
+            filtered_content += file_content[i]
+            i += 1
+    return filtered_content
 
 def test_string(letter):
     return letter == '"'
@@ -155,6 +127,8 @@ def alternate_scan(file_path):
     lineNumber = 0
     atom = ''
     flag_string = False
+
+    file = filter_comments(file)
     
     for line in file.splitlines():
         lineNumber += 1
@@ -164,25 +138,19 @@ def alternate_scan(file_path):
             if skip_line:
                 break
 
-            # Tratamento de strings
-            if test_string(letter):
-                if flag_string:
+            if test_string(letter): # Verifies if the letter is the start or the end of a string by detecting " caracter
+
+                if flag_string: # If it's inside a string it keeps constructing the atom until another " is detected
                     atom += letter
-                    add_to_dict(atom, lineNumber)
-                    if not atom_in_table(atom):
-                        add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                    else:
-                        update_atom_lines(atom, list_atoms[atom])
+                    process_atom(atom, lineNumber)
                     atom = ''
+
                 else:
                     if atom:
-                        add_to_dict(atom, lineNumber)
-                        if not atom_in_table(atom):
-                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                        else:
-                            update_atom_lines(atom, list_atoms[atom])
+                        process_atom(atom, lineNumber)
                         atom = ''
                     atom += letter
+
                 flag_string = not flag_string
                 continue
 
@@ -190,61 +158,34 @@ def alternate_scan(file_path):
                 atom += letter
                 continue
 
-            if letter != '' and letter != '\n' and letter != '\t':
-                if test_short_comment(atom):
-                    atom += line[i:]  
-                    skip_line = True
-                    break 
+            if letter != '' and letter != '\n' and letter != '\t': 
 
                 if test_special_caracter(letter):
-                    if atom:
-                        add_to_dict(atom, lineNumber)
-                        if not atom_in_table(atom):
-                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                        else:
-                            update_atom_lines(atom, list_atoms[atom])
+                    process_atom(atom, lineNumber)
                     atom = letter
-                    add_to_dict(atom, lineNumber)
-                    if not atom_in_table(atom):
-                        add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                    else:
-                        update_atom_lines(atom, list_atoms[atom])
+                    process_atom(atom, lineNumber)
                     atom = ''
                 
                 elif letter == ' ':
                     if atom:
-                        add_to_dict(atom, lineNumber)
-                        if not atom_in_table(atom):
-                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                        else:
-                            update_atom_lines(atom, list_atoms[atom])
+                        process_atom(atom, lineNumber)
                         atom = ''
+
                 elif letter == ',' or letter == ';':
                     if atom:
-                        add_to_dict(atom, lineNumber)
-                        if not atom_in_table(atom):
-                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                        else:
-                            update_atom_lines(atom, list_atoms[atom])
+                        process_atom(atom, lineNumber)
                     atom = letter
-                    add_to_dict(atom, lineNumber)
-                    if not atom_in_table(atom):
-                        add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-                    else:
-                        update_atom_lines(atom, list_atoms[atom])
+                    process_atom(atom, lineNumber)
                     atom = ''
                 else:       
                     atom += letter
 
         if atom:
-            add_to_dict(atom, lineNumber)
-            if not atom_in_table(atom):
-                add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
-            else:
-                update_atom_lines(atom, list_atoms[atom])
+            process_atom(atom, lineNumber)
             atom = ''
 
-    print(f'atomo: {list_atoms.keys()}')
+    return list_atoms
+
 
 def lexicalAnalyze():
     return 0

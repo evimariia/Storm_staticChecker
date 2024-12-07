@@ -33,20 +33,27 @@ def atom_in_table(atom):
         if entry and entry[0] == atom:
             return True
 
+def atom_in_table(atom):
+     for entry in symbolTable:
+        if entry and entry[0] == atom:
+            return True
+
 def update_atom_code(atom, code):
     for entry in symbolTable:
         if entry and entry[0] == atom:
                 entry[1] = code
+                break
 
 def update_atom_type(atom, atom_type):
     for entry in symbolTable:
         if entry and entry[0] == atom:
                 entry[3] = atom_type
+                break
 
 def update_atom_lines(atom, line_number):
     for entry in symbolTable:
         if entry and entry[0] == atom:
-            if line_number not in entry[2]:
+            if line_number not in entry[2] and len(entry[2]) <= 5:
                 entry[2] = line_number
 
 def searchSymbol(symbol, cod):    
