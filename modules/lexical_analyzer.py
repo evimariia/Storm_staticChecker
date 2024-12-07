@@ -1,9 +1,18 @@
-from symbol_table import add_symbol_to_table, atom_in_table, update_atom_lines
+from modules.symbol_table import add_symbol_to_table, atom_in_table, update_atom_lines, getIndex
 import os
 import re
 
 global list_atoms
 list_atoms = {}
+
+divider = "==============================================\n"
+header = """Equipe 04: os caras do momento.
+            Componentes:
+            Bruno da Costa Sales, bruno.sales@aln.senaicimatec.edu.br, (71)99650-1212
+            Évila Maria de Souza Carneiro, evila.carneiro@aln.senaicimatec.edu.br, (71)
+            Gabriel Batista Reis, gabriel.b@aln.senaicimatec.edu.br, o memso de samplix
+            João Victor Borges Lima, joao.l@aln.senaicimatec.edu.br, (71)4002-8922\n
+            """
 
 LexReport = [
     ['header', 'atom', 'code', 'symbolTableIndex', 'line']
@@ -103,24 +112,10 @@ def test_caracter(atom):
     if atom == "'":
         return True
 
-def test_short_comment(atom):
-    if atom == '//':
-        return True
-
-def test_long_comment(atom):
-    if atom == '/*':
-        return True
-
 def test_special_caracter(atom):
     caracteres = ['(', ')', '[', ']', '{', '}']
     if atom in caracteres:
         return True
-
-def add_to_dict(key, value):
-    if key not in list_atoms:
-        list_atoms[key] = []
-    list_atoms[key].append(value)
-
 
 def alternate_scan(file_path):
     file = openFile(file_path)
@@ -186,24 +181,11 @@ def alternate_scan(file_path):
 
     return list_atoms
 
-
-def lexicalAnalyze():
-    return 0
-
 def isValidTokenForLanguage(caracter):
     if caracter in validTokens:
         return True
     else:
         return False
-
-def isValidTokenForPattern(atom):
-    for value in reservedWordsAndSymbols.values():
-        if atom == value:
-            atomCode = findKeyByValue(reservedWordsAndSymbols, atom)
-            return True
-            break
-        elif isinstance(atom, str):
-            pass
 
 def generateLexicalReport(file_path):
     base_name = os.path.basename(file_path).split('.')[0]
@@ -225,11 +207,3 @@ def addToLexReport(atom, code, lineNumber):
         lineNumber
     ]
     LexReport.append(newEntry)
-
-file_path = r"C:\Users\Bruno\Storm_staticChecker\teste.242"
-addToLexReport('programa', 'A17', 1)
-addToLexReport('samplix', 'C07', 1)
-addToLexReport('samplix', 'E22', 2)
-addToLexReport('samplix', 'C07', 3)
-generateLexicalReport(file_path)
-#alternate_scan(file_path)

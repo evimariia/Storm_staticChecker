@@ -1,5 +1,5 @@
-from lexical_analyzer import list_atoms
-from symbol_table import update_atom_code, update_atom_type
+from modules.lexical_analyzer import list_atoms
+from modules.symbol_table import update_atom_code, update_atom_type
 
 import re
 
@@ -123,22 +123,10 @@ def isValidTokenForPattern(atom):
         elif isinstance(atom, str):
             pass
 
-def classify_atoms(list_atoms):
+def classify_atoms():
     for atom in list_atoms.keys():
         if atom in reservedWordsAndSymbols.values():
             update_atom_code(atom, isValidTokenForPattern(atom))
         else:
             check_type(atom)
     print('fim')
-
-classify_atoms(list_atoms)
-
-#elementos dos relatórios
-divider = "==============================================\n"
-header = """Equipe 04: os caras do momento.
-            Componentes:
-            Bruno da Costa Sales, bruno.sales@aln.senaicimatec.edu.br, (71)99650-1212
-            Évila Maria de Souza Carneiro, evila.carneiro@aln.senaicimatec.edu.br, (71)
-            Gabriel Batista Reis, gabriel.b@aln.senaicimatec.edu.br, o memso de samplix
-            João Victor Borges Lima, joao.l@aln.senaicimatec.edu.br, (71)4002-8922\n
-            """

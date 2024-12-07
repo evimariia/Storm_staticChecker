@@ -7,12 +7,16 @@ symbolTable = [
 
 indice = 0
 
+divider = "==============================================\n"
+header = """Equipe 04: os caras do momento.
+            Componentes:
+            Bruno da Costa Sales, bruno.sales@aln.senaicimatec.edu.br, (71)99650-1212
+            Évila Maria de Souza Carneiro, evila.carneiro@aln.senaicimatec.edu.br, (71)
+            Gabriel Batista Reis, gabriel.b@aln.senaicimatec.edu.br, o memso de samplix
+            João Victor Borges Lima, joao.l@aln.senaicimatec.edu.br, (71)4002-8922\n
+            """
+
 def add_symbol_to_table(atom, code, line_number, atom_type, qtdeBeforeTrunk, qtdeAfterTrunk):
-    '''for entry in symbolTable:
-        if entry and entry[0] == atom:
-            return'''
-    
-    #if (searchSymbol(atom, code)==False):
     global indice
     indice += 1
     new_entry = [
@@ -25,25 +29,18 @@ def add_symbol_to_table(atom, code, line_number, atom_type, qtdeBeforeTrunk, qtd
             indice
         ]
     symbolTable.append(new_entry)
-    #else:
-        #update_atom_lines(atom, line_number)
 
 def atom_in_table(atom):
      for entry in symbolTable:
         if entry and entry[0] == atom:
             return True
-
-def atom_in_table(atom):
-     for entry in symbolTable:
-        if entry and entry[0] == atom:
-            return True
-
+        
 def update_atom_code(atom, code):
     for entry in symbolTable:
         if entry and entry[0] == atom:
                 entry[1] = code
                 break
-
+        
 def update_atom_type(atom, atom_type):
     for entry in symbolTable:
         if entry and entry[0] == atom:
@@ -77,8 +74,6 @@ def getIndex(symbol, code):
             return entry[6]
     
 def generate_symbol_table_report(file_path):
-    #esse indice é uma solução temporária, deveria estar no addSymbol
-    #index=0
     base_name = os.path.basename(file_path).split('.')[0]
     filename = f"./results/{base_name}_symbol_table.TAB"
     os.makedirs(os.path.dirname(filename), exist_ok=True)
@@ -89,13 +84,8 @@ def generate_symbol_table_report(file_path):
         for entry in symbolTable:
             if (entry[6] > 0):
                 f.write(f"""Entrada: {entry[6]}, Código: {entry[1]}, Lexeme: {entry[0]}
-Pré-truncagem: {entry[4]}, Pós-truncagem: {entry[5]}
-Tipo: {entry[3]}, Linhas: {entry[2]}\n{divider}""")
+                        Pré-truncagem: {entry[4]}, Pós-truncagem: {entry[5]}
+                        Tipo: {entry[3]}, Linhas: {entry[2]}\n{divider}""")
             #index +=1
     print(f"Relatório gerado em {filename}")
         
-file_path = r"C:\Users\Bruno\Storm_staticChecker\teste.242"
-#add_symbol_to_table('programa', 'A17', [1,1,2], "ReservedWord", 8, 8)
-#add_symbol_to_table('samplix', 'C01', [2,2,2], "ConsCadeia", 7, 7)
-#update_atom_lines('samplix', 3)
-generate_symbol_table_report(file_path)
