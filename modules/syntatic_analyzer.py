@@ -1,5 +1,5 @@
-from lexical_analyzer import list_atoms
-from symbol_table import update_atom_code, update_atom_type
+from modules.lexical_analyzer import list_atoms
+from modules.symbol_table import update_atom_code, update_atom_type
 
 import re
 
@@ -123,12 +123,10 @@ def isValidTokenForPattern(atom):
         elif isinstance(atom, str):
             pass
 
-def classify_atoms(list_atoms):
+def classify_atoms():
     for atom in list_atoms.keys():
         if atom in reservedWordsAndSymbols.values():
             update_atom_code(atom, isValidTokenForPattern(atom))
         else:
             check_type(atom)
     print('fim')
-
-classify_atoms(list_atoms)

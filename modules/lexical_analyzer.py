@@ -1,9 +1,22 @@
-from symbol_table import add_symbol_to_table, atom_in_table, update_atom_lines
+from modules.symbol_table import add_symbol_to_table, atom_in_table, update_atom_lines, getIndex
 import os
 import re
 
 global list_atoms
 list_atoms = {}
+
+divider = "==============================================\n"
+header = """Equipe 04: os caras do momento.
+            Componentes:
+            Bruno da Costa Sales, bruno.sales@aln.senaicimatec.edu.br, (71)99650-1212
+            Évila Maria de Souza Carneiro, evila.carneiro@aln.senaicimatec.edu.br, (71)
+            Gabriel Batista Reis, gabriel.b@aln.senaicimatec.edu.br, o memso de samplix
+            João Victor Borges Lima, joao.l@aln.senaicimatec.edu.br, (71)4002-8922\n
+            """
+
+LexReport = [
+    ['header', 'atom', 'code', 'symbolTableIndex', 'line']
+]
 
 validTokens = [
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -92,6 +105,18 @@ def filter_comments(file_content):
             i += 1
     return filtered_content
 
+def test_string(letter):
+    return letter == '"'
+
+def test_caracter(atom):
+    if atom == "'":
+        return True
+
+def test_special_caracter(atom):
+    caracteres = ['(', ')', '[', ']', '{', '}']
+    if atom in caracteres:
+        return True
+
 def alternate_scan(file_path):
     file = openFile(file_path)
     lineNumber = 0
@@ -156,18 +181,29 @@ def alternate_scan(file_path):
 
     return list_atoms
 
-
-def lexicalAnalyze():
-    return 0
-
 def isValidTokenForLanguage(caracter):
     if caracter in validTokens:
         return True
     else:
         return False
 
-def generateLexicalReport():
-    return None
+def generateLexicalReport(file_path):
+    base_name = os.path.basename(file_path).split('.')[0]
+    filename = f"./results/{base_name}_lexical_report.LEX"
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(f"{header}\nRELATÓRIO DA TABELA DE SÍMBOLOS - {file_path}\n\n")
+        for entry in LexReport:
+            if (entry[0]!='header'):
+                f.write(f"Lexeme: {entry[0]}, Código: {entry[1]}, ÍndiceTabSim: {entry[2]}, Linha: {entry[3]}\n{divider}")
+    print(f"Relatório gerado em {filename}")
 
-file_path = r"C:\Users\evila\OneDrive\Documentos\teste1.242"
-alternate_scan(file_path)
+def addToLexReport(atom, code, lineNumber):
+
+    newEntry = [
+        atom,
+        code,
+        getIndex(atom, code),
+        lineNumber
+    ]
+    LexReport.append(newEntry)
