@@ -5,6 +5,10 @@ import re
 global list_atoms
 list_atoms = {}
 
+LexReport = [
+    ['header', 'atom', 'code', 'symbolTableIndex', 'line']
+]
+
 validTokens = [
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
@@ -92,6 +96,32 @@ def filter_comments(file_content):
             i += 1
     return filtered_content
 
+def test_string(letter):
+    return letter == '"'
+
+def test_caracter(atom):
+    if atom == "'":
+        return True
+
+def test_short_comment(atom):
+    if atom == '//':
+        return True
+
+def test_long_comment(atom):
+    if atom == '/*':
+        return True
+
+def test_special_caracter(atom):
+    caracteres = ['(', ')', '[', ']', '{', '}']
+    if atom in caracteres:
+        return True
+
+def add_to_dict(key, value):
+    if key not in list_atoms:
+        list_atoms[key] = []
+    list_atoms[key].append(value)
+
+
 def alternate_scan(file_path):
     file = openFile(file_path)
     lineNumber = 0
@@ -166,8 +196,40 @@ def isValidTokenForLanguage(caracter):
     else:
         return False
 
-def generateLexicalReport():
-    return None
+def isValidTokenForPattern(atom):
+    for value in reservedWordsAndSymbols.values():
+        if atom == value:
+            atomCode = findKeyByValue(reservedWordsAndSymbols, atom)
+            return True
+            break
+        elif isinstance(atom, str):
+            pass
 
-file_path = r"C:\Users\evila\OneDrive\Documentos\teste1.242"
-alternate_scan(file_path)
+def generateLexicalReport(file_path):
+    base_name = os.path.basename(file_path).split('.')[0]
+    filename = f"./results/{base_name}_lexical_report.LEX"
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(f"{header}\nRELATÓRIO DA TABELA DE SÍMBOLOS - {file_path}\n\n")
+        for entry in LexReport:
+            if (entry[0]!='header'):
+                f.write(f"Lexeme: {entry[0]}, Código: {entry[1]}, ÍndiceTabSim: {entry[2]}, Linha: {entry[3]}\n{divider}")
+    print(f"Relatório gerado em {filename}")
+
+def addToLexReport(atom, code, lineNumber):
+
+    newEntry = [
+        atom,
+        code,
+        getIndex(atom, code),
+        lineNumber
+    ]
+    LexReport.append(newEntry)
+
+file_path = r"C:\Users\Bruno\Storm_staticChecker\teste.242"
+addToLexReport('programa', 'A17', 1)
+addToLexReport('samplix', 'C07', 1)
+addToLexReport('samplix', 'E22', 2)
+addToLexReport('samplix', 'C07', 3)
+generateLexicalReport(file_path)
+#alternate_scan(file_path)
