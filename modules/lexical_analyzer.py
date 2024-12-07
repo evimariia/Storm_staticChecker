@@ -204,15 +204,14 @@ def process_atom(atom, lineNumber, list_atoms):
     if not is_valid:
         print(f"Atomo inválido encontrado: {atom}")
         return
-    else:
-        is
+    
     if atom not in list_atoms:
         list_atoms[atom] = [lineNumber]
     else:
         list_atoms[atom].append(lineNumber)
     if not atom_in_table(atom):
-        if atom_code == "C07":
-            print(atom_code)
+        #if atom_code == "C07":
+            #print(atom_code)
             #atom = truncagem(atom)
         add_symbol_to_table(atom, atom_code, list_atoms[atom], atom_type, len(atom), len(atom))
     else:
