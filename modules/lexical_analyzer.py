@@ -1,78 +1,13 @@
-#from modules.syntatic_analyzer import isValidTokenForLanguage, isValidTokenForPattern
 import os
 import re
 
-global reservedWordsAndSymbols
-global identifiers
+global list_atoms
+list_atoms = {'atom':'lines'}
 
-# Defines the language's atoms list
-reservedWordsAndSymbols = {
-    'cód': 'Átomo',
-    'A01': 'cadeia',
-    'A02': 'caracter',
-    'A03': 'declaracoes',
-    'A04': 'enquanto',
-    'A05': 'false',
-    'A06': 'fimDeclaracoes',
-    'A07': 'fimEnquanto',
-    'A08': 'fimFunc',
-    'A09': 'fimFuncoes',
-    'A10': 'fimPrograma',
-    'A11': 'fimSe',
-    'A12': 'funcoes',
-    'A13': 'imprime',
-    'A14': 'inteiro',
-    'A15': 'logico',
-    'A16': 'pausa',
-    'A17': 'programa',
-    'A18': 'real',
-    'A19': 'retorna',
-    'A20': 'se',
-    'A21': 'senao',
-    'A22': 'tipoFunc',
-    'A23': 'tipoParam',
-    'A24': 'tipoVar',
-    'A25': 'true',
-    'A26': 'vazio',
-    'B01': '%',
-    'B02': '(',
-    'B03': ')',
-    'B04': ',',
-    'B05': ':',
-    'B06': ':=',
-    'B07': ';',
-    'B08': '?',
-    'B09': '[',
-    'B10': ']',
-    'B11': '{',
-    'B12': '}',
-    'B13': '-',
-    'B14': '*',
-    'B15': '/',
-    'B16': '+',
-    'B17': '!=',
-    'B18': '<',
-    'B19': '<=',
-    'B20': '==',
-    'B21': '>',
-    'B22': '>=',
-    'D01': 'subMáquina1',
-    'D02': 'subMáquina2',
-    'D03': 'subMáquina3'
-    # Add others subMáquinas here if it's necessary
-}
+LexReport = [
+    ['header', 'atom', 'code', 'symbolTableIndex', 'line']
+]
 
-#consCadeia começa e termina com aspas duplas
-#consCaracter começa e termina com aspas simples
-identifiers = {
-    'C01': ['consCadeia'],
-    'C02': ['consCaracter'],
-    'C03': ['consInteiro'],
-    'C04': ['consReal'],
-    'C05': ['nomFuncao'],
-    'C06': ['nomPrograma'],
-    'C07': ['variavel']
-}
 
 validTokens = [
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -189,21 +124,127 @@ def scan(file_path):
 
     print(f'atomo: {atom}')
 
+def test_string(letter):
+    return letter == '"'
+
+def test_caracter(atom):
+    if atom == "'":
+        return True
+
+def test_short_comment(atom):
+    if atom == '//':
+        return True
+
+def test_long_comment(atom):
+    if atom == '/*':
+        return True
+
+def test_special_caracter(atom):
+    caracteres = ['(', ')', '[', ']', '{', '}']
+    if atom in caracteres:
+        return True
+
+def add_to_dict(key, value):
+    if key not in list_atoms:
+        list_atoms[key] = []
+    list_atoms[key].append(value)
+
+
 def alternate_scan(file_path):
-    file = openFile(file_path)    
+    file = openFile(file_path)
     lineNumber = 0
-    control = {'previous':None, 'actual':None, 'next': None, 'line':[]}
-    list_atoms = []
-    atom_aux = ''
     atom = ''
+    flag_string = False
     
     for line in file.splitlines():
         lineNumber += 1
-        for words in line.split():
-            for letter in list(words):
-                pass  
+        skip_line = False
 
-    print(f'atomo: {atom}')
+        for i, letter in enumerate(line):
+            if skip_line:
+                break
+
+            # Tratamento de strings
+            if test_string(letter):
+                if flag_string:
+                    atom += letter
+                    add_to_dict(atom, lineNumber)
+                    if not atom_in_table(atom):
+                        add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+                    else:
+                        update_atom_lines(atom, list_atoms[atom])
+                    atom = ''
+                else:
+                    if atom:
+                        add_to_dict(atom, lineNumber)
+                        if not atom_in_table(atom):
+                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+                        else:
+                            update_atom_lines(atom, list_atoms[atom])
+                        atom = ''
+                    atom += letter
+                flag_string = not flag_string
+                continue
+
+            if flag_string:
+                atom += letter
+                continue
+
+            if letter != '' and letter != '\n' and letter != '\t':
+                if test_short_comment(atom):
+                    atom += line[i:]  
+                    skip_line = True
+                    break 
+
+                if test_special_caracter(letter):
+                    if atom:
+                        add_to_dict(atom, lineNumber)
+                        if not atom_in_table(atom):
+                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+                        else:
+                            update_atom_lines(atom, list_atoms[atom])
+                    atom = letter
+                    add_to_dict(atom, lineNumber)
+                    if not atom_in_table(atom):
+                        add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+                    else:
+                        update_atom_lines(atom, list_atoms[atom])
+                    atom = ''
+                
+                elif letter == ' ':
+                    if atom:
+                        add_to_dict(atom, lineNumber)
+                        if not atom_in_table(atom):
+                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+                        else:
+                            update_atom_lines(atom, list_atoms[atom])
+                        atom = ''
+                elif letter == ',' or letter == ';':
+                    if atom:
+                        add_to_dict(atom, lineNumber)
+                        if not atom_in_table(atom):
+                            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+                        else:
+                            update_atom_lines(atom, list_atoms[atom])
+                    atom = letter
+                    add_to_dict(atom, lineNumber)
+                    if not atom_in_table(atom):
+                        add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+                    else:
+                        update_atom_lines(atom, list_atoms[atom])
+                    atom = ''
+                else:       
+                    atom += letter
+
+        if atom:
+            add_to_dict(atom, lineNumber)
+            if not atom_in_table(atom):
+                add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+            else:
+                update_atom_lines(atom, list_atoms[atom])
+            atom = ''
+
+    print(f'atomo: {list_atoms.keys()}')
 
 def lexicalAnalyze():
     return 0
@@ -217,15 +258,37 @@ def isValidTokenForLanguage(caracter):
 def isValidTokenForPattern(atom):
     for value in reservedWordsAndSymbols.values():
         if atom == value:
-            print(value)
             atomCode = findKeyByValue(reservedWordsAndSymbols, atom)
             return True
             break
         elif isinstance(atom, str):
             pass
 
-def generateLexicalReport():
-    return None
+def generateLexicalReport(file_path):
+    base_name = os.path.basename(file_path).split('.')[0]
+    filename = f"./results/{base_name}_lexical_report.LEX"
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(f"{header}\nRELATÓRIO DA TABELA DE SÍMBOLOS - {file_path}\n\n")
+        for entry in LexReport:
+            if (entry[0]!='header'):
+                f.write(f"Lexeme: {entry[0]}, Código: {entry[1]}, ÍndiceTabSim: {entry[2]}, Linha: {entry[3]}\n{divider}")
+    print(f"Relatório gerado em {filename}")
 
-file_path = r"C:\Users\evila\OneDrive\Documentos\teste1.242"
-scan(file_path)
+def addToLexReport(atom, code, lineNumber):
+
+    newEntry = [
+        atom,
+        code,
+        getIndex(atom, code),
+        lineNumber
+    ]
+    LexReport.append(newEntry)
+
+file_path = r"C:\Users\Bruno\Storm_staticChecker\teste.242"
+addToLexReport('programa', 'A17', 1)
+addToLexReport('samplix', 'C07', 1)
+addToLexReport('samplix', 'E22', 2)
+addToLexReport('samplix', 'C07', 3)
+generateLexicalReport(file_path)
+#alternate_scan(file_path)
