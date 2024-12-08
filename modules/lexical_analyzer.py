@@ -195,13 +195,12 @@ def addToLexReport(atom, code, lineNumber):
     LexReport.append(newEntry)
 
 def truncate_atom(atom):
-    MAX_LENGTH = 30
     truncated = ""
     pattern = r"^[+-]?(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$"
     before_truncation = len(atom)
-    after_truncation = min(MAX_LENGTH, before_truncation)
-    if before_truncation > MAX_LENGTH:
-        truncated = atom[:MAX_LENGTH]
+    after_truncation = min(30, before_truncation)
+    if before_truncation > 30:
+        truncated = atom[:30]
         if truncated.startswith('"') and not truncated.endswith('"'):
             truncated = truncated[:-1] + '"'
         elif truncated.startswith("'") and not truncated.endswith("'"):
