@@ -1,4 +1,5 @@
 from modules.symbol_table import add_symbol_to_table, atom_in_table, update_atom_lines, getIndex
+from modules.syntatic_analyzer import isValidTokenForLanguage, reservedWordsAndSymbols
 import os
 import re
 
@@ -80,6 +81,7 @@ def add_to_dict(key, value):
 def process_atom(atom, lineNumber):
     if atom:
         add_to_dict(atom, lineNumber)
+        addToLexReport(atom, isValidTokenForLanguage(atom), lineNumber)
         if not atom_in_table(atom):
             add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
         else:
@@ -166,6 +168,7 @@ def alternate_scan(file_path):
         if atom:
             process_atom(atom, lineNumber)
             atom = ''
+        #addToLexReport(atom,isValidTokenForPattern(atom),lineNumber)
     return list_atoms
 
 def isValidTokenForLanguage(caracter):
