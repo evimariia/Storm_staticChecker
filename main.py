@@ -9,10 +9,10 @@ def main():
     parser.add_argument("file", help="Caminho do arquivo a ser processado") # Add argument file to the parse
     args = parser.parse_args() # Analyze args give in the CLI'''
 
-    file_path = r"C:\Users\reisb\OneDrive\Documentos\teste.242"
+    file_path = r""
     alternate_scan(file_path)
-    generateLexicalReport(file_path)
     classify_atoms()
+    generateLexicalReport(file_path)
     generate_symbol_table_report(file_path)
 
 if __name__ == "__main__":
