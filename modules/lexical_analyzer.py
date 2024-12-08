@@ -76,13 +76,14 @@ def add_to_dict(key, value):
 
 def process_atom(atom, lineNumber):
     if atom:
-        add_to_dict(atom, lineNumber)
-        addToLexReport(atom, isValidTokenForLanguage(atom), lineNumber)
-        if not atom_in_table(atom):
-            add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
+        truncated, before, after = truncate_atom(atom)
+        if truncated not in list_atoms:
+            add_to_dict(truncated, lineNumber)
+        if not atom_in_table(truncated):
+            add_symbol_to_table(truncated,None,list_atoms[truncated], None, before, after)
         else:
-            update_atom_lines(atom, list_atoms[atom])
-    addToLexReport(atom, None, lineNumber)
+            update_atom_lines(truncated, lineNumber)
+        addToLexReport(truncated, None, lineNumber)
 
 def filter_comments(file_content):
     filtered_content = ""
@@ -165,7 +166,6 @@ def alternate_scan(file_path):
         if atom:
             process_atom(atom, lineNumber)
             atom = ''
-        #addToLexReport(atom,isValidTokenForPattern(atom),lineNumber)
     return list_atoms
 
 def isValidTokenForLanguage(caracter):
@@ -193,3 +193,21 @@ def addToLexReport(atom, code, lineNumber):
         lineNumber
     ]
     LexReport.append(newEntry)
+
+def truncate_atom(atom):
+    MAX_LENGTH = 30
+    truncated = ""
+    pattern = r"^[+-]?(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$"
+    before_truncation = len(atom)
+    after_truncation = min(MAX_LENGTH, before_truncation)
+    if before_truncation > MAX_LENGTH:
+        truncated = atom[:MAX_LENGTH]
+        if truncated.startswith('"') and not truncated.endswith('"'):
+            truncated = truncated[:-1] + '"'
+        elif truncated.startswith("'") and not truncated.endswith("'"):
+            truncated = truncated[:-1] + "'"
+        if re.match(pattern, truncated) and truncated.endswith('.'):
+            truncated = truncated[:-1]
+    else:
+        truncated = atom
+    return truncated, before_truncation, after_truncation

@@ -48,7 +48,8 @@ def update_atom_lines(atom, line_number):
     for entry in symbolTable:
         if entry and entry[0] == atom:
             if line_number not in entry[2] and len(entry[2]) <= 5:
-                entry[2] = line_number
+                entry[2].append(line_number)
+            break
 
 def searchSymbol(symbol, cod):    
     found = 0
