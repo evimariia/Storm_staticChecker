@@ -1,5 +1,7 @@
-'''import modules.lexical_analyzer
-import modules.symbol_table'''
+from modules.lexical_analyzer import list_atoms
+from modules.symbol_table import update_atom_code, update_atom_type
+
+import re
 
 global reservedWordsAndSymbols
 global identifiers
@@ -71,5 +73,60 @@ identifiers = {
     'C07': ['variavel']
 }
 
-def createSyntaticTree():
-    return None
+possivel_cadeia = r'^"|"[A-Za-z0-9]*"$'
+possivel_caracter = r"^'|'[A-Z']'$"
+possivel_num_inteiro = r'^[0-9]+$'
+possivel_num_real = r'^[+-]?(\d+((,\d+)+)?|\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$'
+possivel_variavel = r'^[A-Za-z0-9]+$'
+
+def check_type(atomo):
+
+    if re.match(possivel_cadeia, atomo):
+        update_atom_type(atomo, 'consCadeia')
+        identifiers['C01'].append(atomo)
+        return True, "C01", "cadeia"
+    
+    if re.match(possivel_caracter, atomo):
+        update_atom_type(atomo, 'consCaracter')
+        identifiers['C02'].append(atomo)
+        return True, "C02", "caracter"
+    
+    if re.match(possivel_num_inteiro, atomo):
+        update_atom_type(atomo, 'consInteiro')
+        identifiers['C03'].append(atomo)
+        return True, "C03", "inteiro"
+    
+    if re.match(possivel_num_real, atomo):
+        update_atom_type(atomo, 'consReal')
+        identifiers['C04'].append(atomo)
+        return True, "C04", "real"
+    
+    if re.match(possivel_variavel, atomo):
+        update_atom_type(atomo, 'variavel')
+        identifiers['C07'].append(atomo)
+        return True, "C07", "variavel"
+    else:
+        return True, "C07", "variavel"
+
+def findKeyByValue(dictionary, value):
+    for key, val in dictionary.items():
+        if val == value:
+            return key
+    return None 
+
+def isValidTokenForPattern(atom):
+    for value in reservedWordsAndSymbols.values():
+        if atom == value:
+            atomCode = findKeyByValue(reservedWordsAndSymbols, atom)
+            return atomCode
+            break
+        elif isinstance(atom, str):
+            pass
+
+def classify_atoms():
+    for atom in list_atoms.keys():
+        if atom in reservedWordsAndSymbols.values():
+            update_atom_code(atom, isValidTokenForPattern(atom))
+        else:
+            update_atom_code(atom, check_type(atom)[1])
+    print('fim')
