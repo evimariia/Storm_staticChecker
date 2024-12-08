@@ -122,9 +122,7 @@ def alternate_scan(file_path):
     lineNumber = 0
     atom = ''
     flag_string = False
-
     file = filter_comments(file)
-    
     for line in file.splitlines():
         lineNumber += 1
         skip_line = False
@@ -132,40 +130,31 @@ def alternate_scan(file_path):
         for i, letter in enumerate(line):
             if skip_line:
                 break
-
-            if test_string(letter): # Verifies if the letter is the start or the end of a string by detecting " caracter
-
-                if flag_string: # If it's inside a string it keeps constructing the atom until another " is detected
+            if test_string(letter): 
+                if flag_string: 
                     atom += letter
                     process_atom(atom, lineNumber)
                     atom = ''
-
                 else:
                     if atom:
                         process_atom(atom, lineNumber)
                         atom = ''
                     atom += letter
-
                 flag_string = not flag_string
                 continue
-
             if flag_string:
                 atom += letter
                 continue
-
             if letter != '' and letter != '\n' and letter != '\t': 
-
                 if test_special_caracter(letter):
                     process_atom(atom, lineNumber)
                     atom = letter
                     process_atom(atom, lineNumber)
                     atom = ''
-                
                 elif letter == ' ':
                     if atom:
                         process_atom(atom, lineNumber)
                         atom = ''
-
                 elif letter == ',' or letter == ';':
                     if atom:
                         process_atom(atom, lineNumber)
@@ -174,11 +163,9 @@ def alternate_scan(file_path):
                     atom = ''
                 else:       
                     atom += letter
-
         if atom:
             process_atom(atom, lineNumber)
             atom = ''
-
     return list_atoms
 
 def isValidTokenForLanguage(caracter):
@@ -199,7 +186,6 @@ def generateLexicalReport(file_path):
     print(f"Relatório gerado em {filename}")
 
 def addToLexReport(atom, code, lineNumber):
-
     newEntry = [
         atom,
         code,

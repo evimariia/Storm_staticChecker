@@ -2,21 +2,174 @@ Equipe 04: os caras do momento.
             Componentes:
             Bruno da Costa Sales, bruno.sales@aln.senaicimatec.edu.br, (71)99650-1212
             Évila Maria de Souza Carneiro, evila.carneiro@aln.senaicimatec.edu.br, (71)
-            Gabriel Batista Reis, gabriel.b@aln.senaicimatec.edu.br, o memso de samplix
+            Gabriel Batista Reis, gabriel.b@aln.senaicimatec.edu.br, (71)
             João Victor Borges Lima, joao.l@aln.senaicimatec.edu.br, (71)4002-8922
 
             
-RELATÓRIO DA TABELA DE SÍMBOLOS - C:\Users\Bruno\Storm_staticChecker\teste.242
+RELATÓRIO DA TABELA DE SÍMBOLOS - C:\Users\reisb\OneDrive\Documentos\teste.242
 
-Entrada: 1, Código: A17, Lexeme: programa
-Pré-truncagem: 7, Pós-truncagem: 7
-Tipo: reservedWord, Linhas: 1
-==============================================
-Entrada: 2, Código: C07, Lexeme: samplix
-Pré-truncagem: 7, Pós-truncagem: 7
-Tipo: consCadeia, Linhas: [1, 3]
-==============================================
-Entrada: 3, Código: E22, Lexeme: samplix
-Pré-truncagem: 7, Pós-truncagem: 7
-Tipo: votavotaeconfirma, Linhas: 2
-==============================================
+
+Entrada: 1, Código: A12, Lexeme: funcoes
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [1]
+--------------------------------------------------
+
+Entrada: 2, Código: B02, Lexeme: (
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [1, 2, 9]
+--------------------------------------------------
+
+Entrada: 3, Código: A18, Lexeme: real
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [1]
+--------------------------------------------------
+
+Entrada: 4, Código: None, Lexeme: x
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: variavel, Linhas: [1, 2, 3, 3]
+--------------------------------------------------
+
+Entrada: 5, Código: B04, Lexeme: ,
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [1]
+--------------------------------------------------
+
+Entrada: 6, Código: A14, Lexeme: inteiro
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [1]
+--------------------------------------------------
+
+Entrada: 7, Código: None, Lexeme: y
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: variavel, Linhas: [1, 2]
+--------------------------------------------------
+
+Entrada: 8, Código: B03, Lexeme: )
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [1, 2, 9]
+--------------------------------------------------
+
+Entrada: 9, Código: B05, Lexeme: :
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [1, 2, 4]
+--------------------------------------------------
+
+Entrada: 10, Código: A20, Lexeme: se
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [2]
+--------------------------------------------------
+
+Entrada: 11, Código: B22, Lexeme: >=
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [2, 12]
+--------------------------------------------------
+
+Entrada: 12, Código: None, Lexeme: =
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [3, 5]
+--------------------------------------------------
+
+Entrada: 13, Código: B16, Lexeme: +
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [3]
+--------------------------------------------------
+
+Entrada: 14, Código: None, Lexeme: 2
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: consInteiro, Linhas: [3]
+--------------------------------------------------
+
+Entrada: 15, Código: A04, Lexeme: enquanto
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [4]
+--------------------------------------------------
+
+Entrada: 16, Código: A15, Lexeme: logico
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [5]
+--------------------------------------------------
+
+Entrada: 17, Código: None, Lexeme: z
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: variavel, Linhas: [5]
+--------------------------------------------------
+
+Entrada: 18, Código: A25, Lexeme: true
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [5]
+--------------------------------------------------
+
+Entrada: 19, Código: A08, Lexeme: fimFunc
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [7]
+--------------------------------------------------
+
+Entrada: 20, Código: None, Lexeme: mil
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: variavel, Linhas: [9]
+--------------------------------------------------
+
+Entrada: 21, Código: None, Lexeme: fileprogrma
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: variavel, Linhas: [9]
+--------------------------------------------------
+
+Entrada: 22, Código: None, Lexeme: 178.15
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: consReal, Linhas: [9]
+--------------------------------------------------
+
+Entrada: 23, Código: A01, Lexeme: cadeia
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [9]
+--------------------------------------------------
+
+Entrada: 24, Código: None, Lexeme: programateste123queroversefuncionadoismilevinteequatrosenaicimatec1234
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: variavel, Linhas: [9]
+--------------------------------------------------
+
+Entrada: 25, Código: None, Lexeme: vamos
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: variavel, Linhas: [9]
+--------------------------------------------------
+
+Entrada: 26, Código: None, Lexeme: ver
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: variavel, Linhas: [9]
+--------------------------------------------------
+
+Entrada: 27, Código: B06, Lexeme: :=
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [9]
+--------------------------------------------------
+
+Entrada: 28, Código: B20, Lexeme: ==
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [10]
+--------------------------------------------------
+
+Entrada: 29, Código: B19, Lexeme: <=
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [11]
+--------------------------------------------------
+
+Entrada: 30, Código: None, Lexeme: pararatibum
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: variavel, Linhas: [11]
+--------------------------------------------------
+
+Entrada: 31, Código: None, Lexeme: /a
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [12]
+--------------------------------------------------
+
+Entrada: 32, Código: None, Lexeme: +/
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [13]
+--------------------------------------------------
+
+Entrada: 33, Código: A05, Lexeme: false
+                        Pré-truncagem: None, Pós-truncagem: None
+                        Tipo: None, Linhas: [13]
+--------------------------------------------------

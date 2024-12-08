@@ -12,7 +12,7 @@ header = """Equipe 04: os caras do momento.
             Componentes:
             Bruno da Costa Sales, bruno.sales@aln.senaicimatec.edu.br, (71)99650-1212
             Évila Maria de Souza Carneiro, evila.carneiro@aln.senaicimatec.edu.br, (71)
-            Gabriel Batista Reis, gabriel.b@aln.senaicimatec.edu.br, o memso de samplix
+            Gabriel Batista Reis, gabriel.b@aln.senaicimatec.edu.br, (71)
             João Victor Borges Lima, joao.l@aln.senaicimatec.edu.br, (71)4002-8922\n
             """
 
@@ -74,18 +74,18 @@ def getIndex(symbol, code):
             return entry[6]
     
 def generate_symbol_table_report(file_path):
+    divider = "-" * 50 +"\n" 
     base_name = os.path.basename(file_path).split('.')[0]
     filename = f"./results/{base_name}_symbol_table.TAB"
     os.makedirs(os.path.dirname(filename), exist_ok=True)
-    
+
     with open(filename, 'w', encoding='utf-8') as f:
         f.write(f"{header}\nRELATÓRIO DA TABELA DE SÍMBOLOS - {file_path}\n\n")
-        #f.write(f"{'Lexeme':<20} {'Code':<15} {'Lines'} {'Type'} {'BeforeTrunk'} {'AfterTrunk'}\n")
         for entry in symbolTable:
-            if (entry[6] > 0):
-                f.write(f"""Entrada: {entry[6]}, Código: {entry[1]}, Lexeme: {entry[0]}
+            if len(entry) > 6 and entry[6] > 0:
+                f.write(f"""\nEntrada: {entry[6]}, Código: {entry[1]}, Lexeme: {entry[0]}
                         Pré-truncagem: {entry[4]}, Pós-truncagem: {entry[5]}
                         Tipo: {entry[3]}, Linhas: {entry[2]}\n{divider}""")
-            #index +=1
+            else:
+                continue
     print(f"Relatório gerado em {filename}")
-        
