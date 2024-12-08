@@ -115,13 +115,7 @@ def check_type(atomo):
         identifiers['C05'].append(atomo)
         return True, "C05", "nomeFuncao"
     
-    if re.match(possivel_nome_programa, atomo):
-        update_atom_type(atomo, 'nomPrograma')
-        identifiers['C06'].append(atomo)
-        return True, "C06", "nomePrograma"
-    
-    # Caso não corresponda a nenhum padrão, retorna falso.
-    return False, "CXX", "desconhecido"
+    return True, "C07", "variavel"
 
 
 def findKeyByValue(dictionary, value):
@@ -147,9 +141,10 @@ def classify_atoms():
             if atom in reservedWordsAndSymbols.values():
                 update_atom_type(atom, 'invalidProgramName')
             else:
-                update_atom_code(atom, 'C06')
-                update_atom_type(atom, 'nomPrograma')
-                identifiers['C06'].append(atom)
+                if re.match(possivel_nome_programa, atom):
+                    update_atom_code(atom, 'C06')
+                    update_atom_type(atom, 'nomPrograma')
+                    identifiers['C06'].append(atom)
 
         elif atom in reservedWordsAndSymbols.values():
             update_atom_code(atom, isValidTokenForPattern(atom))
