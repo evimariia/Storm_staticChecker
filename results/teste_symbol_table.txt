@@ -1,5 +1,0 @@
-RELATÓRIO DA TABELA DE SÍMBOLOS - C:\Users\Bruno\Storm_staticChecker\teste.242
-Lexeme               Type            Lines
-atom                 code            line
-programa             A17             [1, 1, 2]
-samplix              C01             [2, 2, 2]

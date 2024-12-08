@@ -11,8 +11,8 @@ def main():
 
     file_path = r"C:\Users\evila\OneDrive\Documentos\teste1.242"
     alternate_scan(file_path)
-    generateLexicalReport(file_path)
     classify_atoms()
+    generateLexicalReport(file_path)
     generate_symbol_table_report(file_path)
 
 if __name__ == "__main__":

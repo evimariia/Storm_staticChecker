@@ -73,14 +73,18 @@ identifiers = {
     'C07': ['variavel']
 }
 
-possivel_cadeia = r'^"|"[A-Za-z0-9]*"$'
-possivel_caracter = r"^'|'[A-Z']'$"
-possivel_num_inteiro = r'^[0-9]+$'
-possivel_num_real = r'^[+-]?(\d+((,\d+)+)?|\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$'
-possivel_variavel = r'^[A-Za-z0-9]+$'
+import re
+
+# Regex para identificar cada categoria
+possivel_cadeia = r'^"([^"]*)"$'  # Cadeia com aspas duplas
+possivel_caracter = r"^'[^']'$"   # Caracter com aspas simples
+possivel_num_inteiro = r'^\d+$'  # Apenas dígitos
+possivel_num_real = r'^[+-]?(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$'  # Número real
+possivel_variavel = r'^[A-Za-z_][A-Za-z0-9_]*$'  # Letras, dígitos, e sublinhados
+possivel_nome_funcao = r'^[A-Za-z][A-Za-z0-9]*$'  # Letras seguidas por letras/dígitos
+possivel_nome_programa = r'^[A-Za-z][A-Za-z0-9]*$'  # Mesma regra que nomeFuncao
 
 def check_type(atomo):
-
     if re.match(possivel_cadeia, atomo):
         update_atom_type(atomo, 'consCadeia')
         identifiers['C01'].append(atomo)
@@ -105,8 +109,20 @@ def check_type(atomo):
         update_atom_type(atomo, 'variavel')
         identifiers['C07'].append(atomo)
         return True, "C07", "variavel"
-    else:
-        return True, "C07", "variavel"
+    
+    if re.match(possivel_nome_funcao, atomo):
+        update_atom_type(atomo, 'nomFuncao')
+        identifiers['C05'].append(atomo)
+        return True, "C05", "nomeFuncao"
+    
+    if re.match(possivel_nome_programa, atomo):
+        update_atom_type(atomo, 'nomPrograma')
+        identifiers['C06'].append(atomo)
+        return True, "C06", "nomePrograma"
+    
+    # Caso não corresponda a nenhum padrão, retorna falso.
+    return False, "CXX", "desconhecido"
+
 
 def findKeyByValue(dictionary, value):
     for key, val in dictionary.items():
@@ -124,9 +140,21 @@ def isValidTokenForPattern(atom):
             pass
 
 def classify_atoms():
+    previous_atom = None
     for atom in list_atoms.keys():
-        if atom in reservedWordsAndSymbols.values():
+        if previous_atom == "programa":
+
+            if atom in reservedWordsAndSymbols.values():
+                update_atom_type(atom, 'invalidProgramName')
+            else:
+                update_atom_code(atom, 'C06')
+                update_atom_type(atom, 'nomPrograma')
+                identifiers['C06'].append(atom)
+
+        elif atom in reservedWordsAndSymbols.values():
             update_atom_code(atom, isValidTokenForPattern(atom))
+            update_atom_type(atom, 'reservedWord')
         else:
-            check_type(atom)
+            update_atom_code(atom, check_type(atom)[1])
+        previous_atom = atom  
     print('fim')
