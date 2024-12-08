@@ -78,8 +78,5 @@ def createSyntaticTree():
 divider = "==============================================\n"
 header = """Equipe 04: os caras do momento.
             Componentes:
-            Bruno da Costa Sales, bruno.sales@aln.senaicimatec.edu.br, (71)99650-1212
-            Évila Maria de Souza Carneiro, evila.carneiro@aln.senaicimatec.edu.br, (71)
-            Gabriel Batista Reis, gabriel.b@aln.senaicimatec.edu.br, o memso de samplix
-            João Victor Borges Lima, joao.l@aln.senaicimatec.edu.br, (71)4002-8922\n
+            \n
             """
