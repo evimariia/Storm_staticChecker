@@ -1,4 +1,4 @@
-from modules.symbol_table import add_symbol_to_table, atom_in_table, update_atom_lines, getIndex
+from modules.symbol_table import add_symbol_to_table, atom_in_table, update_atom_lines, getIndex, getCode
 import os
 import re
 
@@ -8,10 +8,7 @@ list_atoms = {}
 divider = "==============================================\n"
 header = """Equipe 04: os caras do momento.
             Componentes:
-            Bruno da Costa Sales, bruno.sales@aln.senaicimatec.edu.br, (71)99650-1212
-            Évila Maria de Souza Carneiro, evila.carneiro@aln.senaicimatec.edu.br, (71)
-            Gabriel Batista Reis, gabriel.b@aln.senaicimatec.edu.br, o memso de samplix
-            João Victor Borges Lima, joao.l@aln.senaicimatec.edu.br, (71)4002-8922\n
+            \n
             """
 
 LexReport = [
@@ -53,7 +50,7 @@ def openFile(file_path):
             file.close()
 
         except FileNotFoundError:
-            print(f"File not founded.")
+            print(f"File not found.")
 
         except Exception as e:
             print(f"Exception ocurred: {e}")
@@ -84,6 +81,7 @@ def process_atom(atom, lineNumber):
             add_symbol_to_table(atom, None, list_atoms[atom], None, None, None)
         else:
             update_atom_lines(atom, list_atoms[atom])
+    addToLexReport(atom, None, lineNumber)
 
 def filter_comments(file_content):
     filtered_content = ""
@@ -179,10 +177,10 @@ def generateLexicalReport(file_path):
     filename = f"./results/{base_name}_lexical_report.LEX"
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, 'w', encoding='utf-8') as f:
-        f.write(f"{header}\nRELATÓRIO DA TABELA DE SÍMBOLOS - {file_path}\n\n")
+        f.write(f"{header}\nRELATÓRIO LÉXICO - {file_path}\n\n")
         for entry in LexReport:
             if (entry[0]!='header'):
-                f.write(f"Lexeme: {entry[0]}, Código: {entry[1]}, ÍndiceTabSim: {entry[2]}, Linha: {entry[3]}\n{divider}")
+                f.write(f"Lexeme: '{entry[0]}', Código: {getCode(entry[2])}, ÍndiceTabSim: {entry[2]}, Linha: {entry[3]}\n{divider}")
     print(f"Relatório gerado em {filename}")
 
 def addToLexReport(atom, code, lineNumber):

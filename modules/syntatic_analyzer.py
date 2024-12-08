@@ -128,5 +128,5 @@ def classify_atoms():
         if atom in reservedWordsAndSymbols.values():
             update_atom_code(atom, isValidTokenForPattern(atom))
         else:
-            check_type(atom)
+            update_atom_code(atom, check_type(atom)[1])
     print('fim')
