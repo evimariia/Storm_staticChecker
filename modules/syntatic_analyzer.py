@@ -58,11 +58,8 @@ reservedWordsAndSymbols = {
     'B21': '>',
     'B22': '>=',
     'D01': 'subMáquina'
-    # Add others subMáquinas here if it's necessary
 }
 
-#consCadeia começa e termina com aspas duplas
-#consCaracter começa e termina com aspas simples
 identifiers = {
     'C01': ['consCadeia'],
     'C02': ['consCaracter'],
@@ -73,14 +70,15 @@ identifiers = {
     'C07': ['variavel']
 }
 
-possivel_cadeia = r'^"|"[A-Za-z0-9]*"$'
-possivel_caracter = r"^'|'[A-Z']'$"
-possivel_num_inteiro = r'^[0-9]+$'
-possivel_num_real = r'^[+-]?(\d+((,\d+)+)?|\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$'
-possivel_variavel = r'^[A-Za-z0-9]+$'
+possivel_cadeia = r'^"([^"]*)"$'  
+possivel_caracter = r"^'[^']'$"   
+possivel_num_inteiro = r'^\d+$'  
+possivel_num_real = r'^[+-]?(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$'  
+possivel_variavel = r'^[A-Za-z_][A-Za-z0-9_]*$'  
+possivel_nome_funcao = r'^[A-Za-z][A-Za-z0-9]*$'  
+possivel_nome_programa = r'^[A-Za-z][A-Za-z0-9]*$'  
 
 def check_type(atomo):
-
     if re.match(possivel_cadeia, atomo):
         update_atom_type(atomo, 'consCadeia')
         identifiers['C01'].append(atomo)
@@ -105,8 +103,13 @@ def check_type(atomo):
         update_atom_type(atomo, 'variavel')
         identifiers['C07'].append(atomo)
         return True, "C07", "variavel"
-    else:
-        return True, "C07", "variavel"
+    
+    if re.match(possivel_nome_funcao, atomo):
+        update_atom_type(atomo, 'nomFuncao')
+        identifiers['C05'].append(atomo)
+        return True, "C05", "nomeFuncao"
+    
+    return True, "C07", "variavel"
 
 def findKeyByValue(dictionary, value):
     for key, val in dictionary.items():
@@ -124,9 +127,22 @@ def isValidTokenForPattern(atom):
             pass
 
 def classify_atoms():
+    previous_atom = None
     for atom in list_atoms.keys():
-        if atom in reservedWordsAndSymbols.values():
+        if previous_atom == "programa":
+
+            if atom in reservedWordsAndSymbols.values():
+                update_atom_type(atom, 'invalidProgramName')
+            else:
+                if re.match(possivel_nome_programa, atom):
+                    update_atom_code(atom, 'C06')
+                    update_atom_type(atom, 'nomPrograma')
+                    identifiers['C06'].append(atom)
+
+        elif atom in reservedWordsAndSymbols.values():
             update_atom_code(atom, isValidTokenForPattern(atom))
+            update_atom_type(atom, 'reservedWord')
         else:
             update_atom_code(atom, check_type(atom)[1])
+        previous_atom = atom  
     print('fim')
