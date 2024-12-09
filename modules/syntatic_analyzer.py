@@ -60,6 +60,7 @@ reservedWordsAndSymbols = {
     'D01': 'subMáquina'
 }
 
+
 identifiers = {
     'C01': ['consCadeia'],
     'C02': ['consCaracter'],
@@ -70,13 +71,14 @@ identifiers = {
     'C07': ['variavel']
 }
 
+
 possivel_cadeia = r'^"([^"]*)"$'  
 possivel_caracter = r"^'[^']'$"   
-possivel_num_inteiro = r'^\d+$'  
+possivel_num_inteiro = r'^\d+$'  #
 possivel_num_real = r'^[+-]?(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$'  
 possivel_variavel = r'^[A-Za-z_][A-Za-z0-9_]*$'  
 possivel_nome_funcao = r'^[A-Za-z][A-Za-z0-9]*$'  
-possivel_nome_programa = r'^[A-Za-z][A-Za-z0-9]*$'  
+possivel_nome_programa = r'^[A-Za-z][A-Za-z0-9]*$' 
 
 def check_type(atomo):
     if re.match(possivel_cadeia, atomo):
@@ -111,6 +113,7 @@ def check_type(atomo):
     
     return True, "C07", "variavel"
 
+
 def findKeyByValue(dictionary, value):
     for key, val in dictionary.items():
         if val == value:
@@ -128,7 +131,9 @@ def isValidTokenForPattern(atom):
 
 def classify_atoms():
     previous_atom = None
-    for atom in list_atoms.keys():
+    for atom1 in list_atoms.keys():
+        atom = str(atom1).lower()
+        print(f"samplix4: {atom}")
         if previous_atom == "programa":
 
             if atom in reservedWordsAndSymbols.values():

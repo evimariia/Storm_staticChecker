@@ -128,47 +128,48 @@ def alternate_scan(file_path):
         skip_line = False
 
         for i, letter in enumerate(line):
-            if isValidTokenForLanguage(letter):
-                if skip_line:
-                    break
-                if test_string(letter): 
-                    if flag_string: 
-                        atom += letter
-                        process_atom(atom, lineNumber)
-                        atom = ''
-                    else:
-                        if atom:
-                            process_atom(atom, lineNumber)
-                            atom = ''
-                        atom += letter
-                    flag_string = not flag_string
-                    continue
+            if skip_line:
+                break
+            if test_string(letter): 
                 if flag_string:
-                    atom += letter
-                    continue
-                if letter != '' and letter != '\n' and letter != '\t': 
-                    if test_special_caracter(letter):
-                        process_atom(atom, lineNumber)
-                        atom = letter
-                        process_atom(atom, lineNumber)
-                        atom = ''
-                    elif letter == ' ':
-                        if atom:
-                            process_atom(atom, lineNumber)
-                            atom = ''
-                    elif letter == ',' or letter == ';':
-                        if atom:
-                            process_atom(atom, lineNumber)
-                        atom = letter
-                        process_atom(atom, lineNumber)
-                        atom = ''
-                    else:       
+                    if isValidTokenForLanguage(letter): 
                         atom += letter
-            if atom:
-                process_atom(atom, lineNumber)
-                atom = ''
-        else:
-            pass
+                    process_atom(atom, lineNumber)
+                    atom = ''
+                else:
+                    if atom:
+                        process_atom(atom, lineNumber)
+                        atom = ''
+                    if isValidTokenForLanguage(letter): 
+                        atom += letter
+                flag_string = not flag_string
+                continue
+            if flag_string:
+                if isValidTokenForLanguage(letter): 
+                    atom += letter
+                continue
+            if letter != '' and letter != '\n' and letter != '\t': 
+                if test_special_caracter(letter):
+                    process_atom(atom, lineNumber)
+                    atom = letter
+                    process_atom(atom, lineNumber)
+                    atom = ''
+                elif letter == ' ':
+                    if atom:
+                        process_atom(atom, lineNumber)
+                        atom = ''
+                elif letter == ',' or letter == ';':
+                    if atom:
+                        process_atom(atom, lineNumber)
+                    atom = letter
+                    process_atom(atom, lineNumber)
+                    atom = ''
+                else:       
+                    if isValidTokenForLanguage(letter): 
+                        atom += letter
+        if atom:
+            process_atom(atom, lineNumber)
+            atom = ''
     return list_atoms
 
 def isValidTokenForLanguage(caracter):
