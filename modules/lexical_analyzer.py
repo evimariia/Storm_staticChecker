@@ -16,6 +16,8 @@ LexReport = [
 ]
 
 validTokens = [
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -46,12 +48,10 @@ def openFile(file_path):
             with open(file_path, 'r') as file:
                 return file.read()
             file.close()
-
         except FileNotFoundError:
             print(f"File not found.")
-
         except Exception as e:
-            print(f"Exception ocurred: {e}")
+            print(f"Exception occurred: {e}")
     else:
         print(f'File not supported')
 
@@ -75,12 +75,12 @@ def add_to_dict(key, value):
 def process_atom(atom, lineNumber):
     if atom:
         truncated, before, after = truncate_atom(atom)
-        if truncated not in list_atoms:
-            add_to_dict(truncated, lineNumber)
-        if not atom_in_table(truncated):
-            add_symbol_to_table(truncated,None,list_atoms[truncated], None, before, after)
+        if truncated.lower() not in list_atoms:  
+            add_to_dict(truncated.lower(), lineNumber)
+        if not atom_in_table(truncated.lower()):
+            add_symbol_to_table(truncated.lower(), None, list_atoms[truncated.lower()], None, before, after)
         else:
-            update_atom_lines(truncated, lineNumber)
+            update_atom_lines(truncated.lower(), lineNumber)
         addToLexReport(truncated, None, lineNumber)
 
 def filter_comments(file_content):
@@ -124,56 +124,64 @@ def alternate_scan(file_path):
     for line in file.splitlines():
         lineNumber += 1
         skip_line = False
-
         for i, letter in enumerate(line):
-            if isValidTokenForLanguage(letter.upper()):
-                if skip_line:
-                    break
-                if test_string(letter.upper()): 
-                    if flag_string: 
-                        atom += letter.upper()
+            if skip_line:
+                break
+            if test_string(letter): 
+                if flag_string:
+                    if isValidTokenForLanguage(letter): 
+                        atom += letter
+                    process_atom(atom, lineNumber)
+                    atom = ''
+                else:
+                    if atom:
+                        process_atom(atom, lineNumber)
+                        atom = ''
+                    if isValidTokenForLanguage(letter): 
+                        atom += letter
+                flag_string = not flag_string
+                continue
+            if flag_string:
+                if isValidTokenForLanguage(letter): 
+                    atom += letter
+                continue
+            if letter != '' and letter != '\n' and letter != '\t': 
+                if test_special_caracter(letter):
+                    process_atom(atom, lineNumber)
+                    atom = letter
+                    process_atom(atom, lineNumber)
+                    atom = ''
+                elif letter == ' ':
+                    if atom:
+                        process_atom(atom, lineNumber)
+                        atom = ''
+                elif letter == ',' or letter == ';':
+                    if atom:
+                        process_atom(atom, lineNumber)
+                    atom = letter
+                    process_atom(atom, lineNumber)
+                    atom = ''
+                elif letter == ':':
+                    if i + 1 < len(line) and line[i+1] == '=':
+                        process_atom(atom, lineNumber)
+                        atom += letter + '='  
                         process_atom(atom, lineNumber)
                         atom = ''
                     else:
-                        if atom:
-                            process_atom(atom, lineNumber)
-                            atom = ''
-                        atom += letter.upper()
-                    flag_string = not flag_string
-                    continue
-                if flag_string:
-                    atom += letter.upper()
-                    continue
-                if letter != '' and letter != '\n' and letter != '\t': 
-                    if test_special_caracter(letter):
                         process_atom(atom, lineNumber)
-                        atom = letter.upper()
+                        atom = ':'  
                         process_atom(atom, lineNumber)
                         atom = ''
-                    elif letter == ' ':
-                        if atom:
-                            process_atom(atom, lineNumber)
-                            atom = ''
-                    elif letter == ',' or letter == ';':
-                        if atom:
-                            process_atom(atom, lineNumber)
-                        atom = letter.upper()
-                        process_atom(atom, lineNumber)
-                        atom = ''
-                    else:       
-                        atom += letter.upper()
-            if atom:
-                process_atom(atom, lineNumber)
-                atom = ''
-        else:
-            pass
+                else:       
+                    if isValidTokenForLanguage(letter): 
+                        atom += letter
+        if atom:
+            process_atom(atom, lineNumber)
+            atom = ''
     return list_atoms
 
 def isValidTokenForLanguage(caracter):
-    if caracter in validTokens:
-        return True
-    else:
-        return False
+    return caracter.lower() in validTokens  
 
 def generateLexicalReport(file_path):
     base_name = os.path.basename(file_path).split('.')[0]
@@ -182,7 +190,7 @@ def generateLexicalReport(file_path):
     with open(filename, 'w', encoding='utf-8') as f:
         f.write(f"{header}\nRELATÓRIO LÉXICO - {file_path}\n\n")
         for entry in LexReport:
-            if (entry[0]!='header'):
+            if (entry[0] != 'header'):
                 f.write(f"Lexeme: '{entry[0]}', Código: {getCode(entry[2])}, ÍndiceTabSim: {entry[2]}, Linha: {entry[3]}\n{divider}")
     print(f"Relatório gerado em {filename}")
 
