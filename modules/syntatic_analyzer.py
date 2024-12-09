@@ -1,12 +1,10 @@
 from modules.lexical_analyzer import list_atoms
 from modules.symbol_table import update_atom_code, update_atom_type
-
 import re
 
 global reservedWordsAndSymbols
 global identifiers
 
-# Defines the language's atoms list
 reservedWordsAndSymbols = {
     'cód': 'Átomo',
     'A01': 'cadeia',
@@ -74,7 +72,7 @@ identifiers = {
 
 possivel_cadeia = r'^"([^"]*)"$'  
 possivel_caracter = r"^'[^']'$"   
-possivel_num_inteiro = r'^\d+$'  #
+possivel_num_inteiro = r'^\d+$'  
 possivel_num_real = r'^[+-]?(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$'  
 possivel_variavel = r'^[A-Za-z_][A-Za-z0-9_]*$'  
 possivel_nome_funcao = r'^[A-Za-z][A-Za-z0-9]*$'  
@@ -111,6 +109,8 @@ def check_type(atomo):
         identifiers['C05'].append(atomo)
         return True, "C05", "nomeFuncao"
     
+    update_atom_type(atomo, 'variavel')
+    identifiers['C07'].append(atomo)
     return True, "C07", "variavel"
 
 
@@ -133,7 +133,6 @@ def classify_atoms():
     previous_atom = None
     for atom1 in list_atoms.keys():
         atom = str(atom1).lower()
-        print(f"samplix4: {atom}")
         if previous_atom == "programa":
 
             if atom in reservedWordsAndSymbols.values():
@@ -143,6 +142,14 @@ def classify_atoms():
                     update_atom_code(atom, 'C06')
                     update_atom_type(atom, 'nomPrograma')
                     identifiers['C06'].append(atom)
+        elif previous_atom == ':':
+            if atom in reservedWordsAndSymbols.values():
+                update_atom_type(atom, 'invalidProgramName')
+            else:
+                if re.match(possivel_nome_funcao, atom):
+                    update_atom_code(atom, 'C05')
+                    update_atom_type(atom, 'nomFuncao')
+                    identifiers['C05'].append(atom)
 
         elif atom in reservedWordsAndSymbols.values():
             update_atom_code(atom, isValidTokenForPattern(atom))
@@ -150,4 +157,3 @@ def classify_atoms():
         else:
             update_atom_code(atom, check_type(atom)[1])
         previous_atom = atom  
-    print('fim')

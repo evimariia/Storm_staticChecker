@@ -6,232 +6,347 @@ Equipe 04: os caras do momento.
 RELATÓRIO DA TABELA DE SÍMBOLOS - C:\Users\reisb\OneDrive\Documentos\teste.242
 
 
-Entrada: 1, Código: C07, Lexeme: p
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [1, 19, 22]
+Entrada: 1, Código: C07, Lexeme: bla
+Pré-truncagem: 3, Pós-truncagem: 3
+Tipo: variavel, Linhas: [1, 2, 3]
 --------------------------------------------------
 
-Entrada: 2, Código: C07, Lexeme: r
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [1, 3, 7, 19, 21, 22]
+Entrada: 2, Código: C07, Lexeme: samplix
+Pré-truncagem: 7, Pós-truncagem: 7
+Tipo: variavel, Linhas: [4]
 --------------------------------------------------
 
-Entrada: 3, Código: C07, Lexeme: o
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [1, 3, 6, 7, 19, 21]
+Entrada: 3, Código: A17, Lexeme: programa
+Pré-truncagem: 8, Pós-truncagem: 8
+Tipo: reservedWord, Linhas: [5]
 --------------------------------------------------
 
-Entrada: 4, Código: C07, Lexeme: g
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [1, 7, 19]
+Entrada: 4, Código: C06, Lexeme: exemplo
+Pré-truncagem: 7, Pós-truncagem: 7
+Tipo: nomPrograma, Linhas: [5]
 --------------------------------------------------
 
-Entrada: 5, Código: C07, Lexeme: a
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [1, 3, 6, 17, 19, 21]
+Entrada: 5, Código: C07, Lexeme: aaaaaaaaaaaaaaaaaaaaaaajjjjjjj
+Pré-truncagem: 55, Pós-truncagem: 30
+Tipo: variavel, Linhas: [6]
 --------------------------------------------------
 
-Entrada: 6, Código: C07, Lexeme: m
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [1, 9, 19, 22]
+Entrada: 6, Código: A03, Lexeme: declaracoes
+Pré-truncagem: 11, Pós-truncagem: 11
+Tipo: reservedWord, Linhas: [7]
 --------------------------------------------------
 
-Entrada: 7, Código: C07, Lexeme: t
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [1, 3, 6, 7, 19, 22]
+Entrada: 7, Código: A14, Lexeme: inteiro
+Pré-truncagem: 7, Pós-truncagem: 7
+Tipo: reservedWord, Linhas: [8]
 --------------------------------------------------
 
-Entrada: 8, Código: C07, Lexeme: e
+Entrada: 8, Código: C07, Lexeme: b
 Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [1, 3, 4, 6, 7, 19]
+Tipo: variavel, Linhas: [8, 16, 17, 20, 26]
 --------------------------------------------------
 
-Entrada: 9, Código: C07, Lexeme: s
+Entrada: 9, Código: B04, Lexeme: ,
 Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [1, 3, 4, 17, 19, 21]
+Tipo: reservedWord, Linhas: [8, 33]
 --------------------------------------------------
 
-Entrada: 10, Código: C07, Lexeme: f
+Entrada: 10, Código: C07, Lexeme: a
 Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [3, 9, 17, 19, 24]
+Tipo: variavel, Linhas: [8, 15, 17, 18, 26]
 --------------------------------------------------
 
-Entrada: 11, Código: C07, Lexeme: u
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [3, 6, 7, 9, 19, 22]
+Entrada: 11, Código: C07, Lexeme: resultado
+Pré-truncagem: 9, Pós-truncagem: 9
+Tipo: variavel, Linhas: [8, 18, 20]
 --------------------------------------------------
 
-Entrada: 12, Código: C07, Lexeme: n
+Entrada: 12, Código: B07, Lexeme: ;
 Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [3, 6, 9, 19, 21, 26]
+Tipo: reservedWord, Linhas: [8, 9, 13, 15, 16]
 --------------------------------------------------
 
-Entrada: 13, Código: C07, Lexeme: c
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [3, 7, 9, 19]
+Entrada: 13, Código: A01, Lexeme: cadeia
+Pré-truncagem: 6, Pós-truncagem: 6
+Tipo: reservedWord, Linhas: [9, 12]
 --------------------------------------------------
 
-Entrada: 14, Código: B02, Lexeme: (
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: reservedWord, Linhas: [3, 4, 19]
---------------------------------------------------
-
-Entrada: 15, Código: C07, Lexeme: l
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [3, 7, 19, 22, 24]
---------------------------------------------------
-
-Entrada: 16, Código: C07, Lexeme: x
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [3, 4, 5, 10, 11, 12]
---------------------------------------------------
-
-Entrada: 17, Código: B04, Lexeme: ,
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: reservedWord, Linhas: [3]
---------------------------------------------------
-
-Entrada: 18, Código: C07, Lexeme: i
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [3, 7, 9, 19, 21, 22]
---------------------------------------------------
-
-Entrada: 19, Código: C07, Lexeme: y
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [3, 4]
---------------------------------------------------
-
-Entrada: 20, Código: B03, Lexeme: )
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: reservedWord, Linhas: [3, 4, 19]
---------------------------------------------------
-
-Entrada: 21, Código: B05, Lexeme: :
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: reservedWord, Linhas: [3, 4, 6, 19]
---------------------------------------------------
-
-Entrada: 22, Código: B21, Lexeme: >
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: reservedWord, Linhas: [4, 23]
---------------------------------------------------
-
-Entrada: 23, Código: C07, Lexeme: =
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: None, Linhas: [4, 5, 7, 19, 20, 22]
---------------------------------------------------
-
-Entrada: 24, Código: B16, Lexeme: +
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: reservedWord, Linhas: [5, 24]
---------------------------------------------------
-
-Entrada: 25, Código: C03, Lexeme: 2
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: consInteiro, Linhas: [5, 18, 19]
---------------------------------------------------
-
-Entrada: 26, Código: C07, Lexeme: q
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [6, 19]
---------------------------------------------------
-
-Entrada: 27, Código: C07, Lexeme: z
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [7]
---------------------------------------------------
-
-Entrada: 28, Código: C07, Lexeme: F
-Pré-truncagem: 1, Pós-truncagem: 1
+Entrada: 14, Código: C07, Lexeme: mensagem
+Pré-truncagem: 8, Pós-truncagem: 8
 Tipo: variavel, Linhas: [9]
 --------------------------------------------------
 
-Entrada: 29, Código: C07, Lexeme: k
+Entrada: 15, Código: A12, Lexeme: funcoes
+Pré-truncagem: 7, Pós-truncagem: 7
+Tipo: reservedWord, Linhas: [11]
+--------------------------------------------------
+
+Entrada: 16, Código: C07, Lexeme: tipofuncao
+Pré-truncagem: 10, Pós-truncagem: 10
+Tipo: variavel, Linhas: [12]
+--------------------------------------------------
+
+Entrada: 17, Código: A26, Lexeme: vazio
+Pré-truncagem: 5, Pós-truncagem: 5
+Tipo: reservedWord, Linhas: [12]
+--------------------------------------------------
+
+Entrada: 18, Código: B05, Lexeme: :
 Pré-truncagem: 1, Pós-truncagem: 1
+Tipo: reservedWord, Linhas: [12, 31]
+--------------------------------------------------
+
+Entrada: 19, Código: C05, Lexeme: exemplofuncao
+Pré-truncagem: 13, Pós-truncagem: 13
+Tipo: nomFuncao, Linhas: [12]
+--------------------------------------------------
+
+Entrada: 20, Código: B02, Lexeme: (
+Pré-truncagem: 1, Pós-truncagem: 1
+Tipo: reservedWord, Linhas: [12, 13, 31, 32, 33]
+--------------------------------------------------
+
+Entrada: 21, Código: C07, Lexeme: parametro
+Pré-truncagem: 9, Pós-truncagem: 9
+Tipo: variavel, Linhas: [12]
+--------------------------------------------------
+
+Entrada: 22, Código: B03, Lexeme: )
+Pré-truncagem: 1, Pós-truncagem: 1
+Tipo: reservedWord, Linhas: [12, 13, 31, 32, 33]
+--------------------------------------------------
+
+Entrada: 23, Código: B11, Lexeme: {
+Pré-truncagem: 1, Pós-truncagem: 1
+Tipo: reservedWord, Linhas: [12]
+--------------------------------------------------
+
+Entrada: 24, Código: A13, Lexeme: imprime
+Pré-truncagem: 7, Pós-truncagem: 7
+Tipo: reservedWord, Linhas: [13]
+--------------------------------------------------
+
+Entrada: 25, Código: C01, Lexeme: "executando a funcao exemplof"
+Pré-truncagem: 35, Pós-truncagem: 30
+Tipo: consCadeia, Linhas: [13]
+--------------------------------------------------
+
+Entrada: 26, Código: B06, Lexeme: :=
+Pré-truncagem: 2, Pós-truncagem: 2
+Tipo: reservedWord, Linhas: [15, 16, 18, 20, 28]
+--------------------------------------------------
+
+Entrada: 27, Código: C07, Lexeme: =
+Pré-truncagem: 1, Pós-truncagem: 1
+Tipo: variavel, Linhas: [15, 16, 18, 20, 28]
+--------------------------------------------------
+
+Entrada: 28, Código: C04, Lexeme: 10.725
+Pré-truncagem: 6, Pós-truncagem: 6
+Tipo: consReal, Linhas: [15]
+--------------------------------------------------
+
+Entrada: 29, Código: C04, Lexeme: 20.357
+Pré-truncagem: 6, Pós-truncagem: 6
+Tipo: consReal, Linhas: [16]
+--------------------------------------------------
+
+Entrada: 30, Código: A20, Lexeme: se
+Pré-truncagem: 2, Pós-truncagem: 2
+Tipo: reservedWord, Linhas: [17]
+--------------------------------------------------
+
+Entrada: 31, Código: B21, Lexeme: >
+Pré-truncagem: 1, Pós-truncagem: 1
+Tipo: reservedWord, Linhas: [17]
+--------------------------------------------------
+
+Entrada: 32, Código: C07, Lexeme: entao
+Pré-truncagem: 5, Pós-truncagem: 5
 Tipo: variavel, Linhas: [17]
 --------------------------------------------------
 
-Entrada: 30, Código: C03, Lexeme: 0
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: consInteiro, Linhas: [18]
+Entrada: 33, Código: A21, Lexeme: senao
+Pré-truncagem: 5, Pós-truncagem: 5
+Tipo: reservedWord, Linhas: [19]
 --------------------------------------------------
 
-Entrada: 31, Código: C03, Lexeme: 1
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: consInteiro, Linhas: [18, 19]
+Entrada: 34, Código: C07, Lexeme: fimse
+Pré-truncagem: 5, Pós-truncagem: 5
+Tipo: variavel, Linhas: [21]
 --------------------------------------------------
 
-Entrada: 32, Código: C03, Lexeme: 3
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: consInteiro, Linhas: [18, 19]
---------------------------------------------------
-
-Entrada: 33, Código: C03, Lexeme: 4
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: consInteiro, Linhas: [18, 19]
---------------------------------------------------
-
-Entrada: 34, Código: C03, Lexeme: 5
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: consInteiro, Linhas: [18, 19]
---------------------------------------------------
-
-Entrada: 35, Código: C03, Lexeme: 6
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: consInteiro, Linhas: [18]
---------------------------------------------------
-
-Entrada: 36, Código: C03, Lexeme: 7
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: consInteiro, Linhas: [18, 19]
---------------------------------------------------
-
-Entrada: 37, Código: C03, Lexeme: 8
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: consInteiro, Linhas: [18, 19]
---------------------------------------------------
-
-Entrada: 38, Código: C03, Lexeme: 9
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: consInteiro, Linhas: [18]
---------------------------------------------------
-
-Entrada: 39, Código: C07, Lexeme: .
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: None, Linhas: [19]
---------------------------------------------------
-
-Entrada: 40, Código: C07, Lexeme: d
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [19, 21, 26]
---------------------------------------------------
-
-Entrada: 41, Código: C07, Lexeme: v
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [19, 21, 26]
---------------------------------------------------
-
-Entrada: 42, Código: C07, Lexeme: h
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [21, 22, 26]
---------------------------------------------------
-
-Entrada: 43, Código: C07, Lexeme: j
-Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [21, 26]
---------------------------------------------------
-
-Entrada: 44, Código: B18, Lexeme: <
-Pré-truncagem: 1, Pós-truncagem: 1
+Entrada: 35, Código: A19, Lexeme: retorna
+Pré-truncagem: 7, Pós-truncagem: 7
 Tipo: reservedWord, Linhas: [22]
 --------------------------------------------------
 
-Entrada: 45, Código: C07, Lexeme: b
+Entrada: 36, Código: B12, Lexeme: }
 Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: variavel, Linhas: [22]
+Tipo: reservedWord, Linhas: [23]
 --------------------------------------------------
 
-Entrada: 46, Código: B15, Lexeme: /
+Entrada: 37, Código: C07, Lexeme: fimfuncoes
+Pré-truncagem: 10, Pós-truncagem: 10
+Tipo: variavel, Linhas: [24]
+--------------------------------------------------
+
+Entrada: 38, Código: A04, Lexeme: enquanto
+Pré-truncagem: 8, Pós-truncagem: 8
+Tipo: reservedWord, Linhas: [26]
+--------------------------------------------------
+
+Entrada: 39, Código: B19, Lexeme: <=
+Pré-truncagem: 2, Pós-truncagem: 2
+Tipo: reservedWord, Linhas: [26]
+--------------------------------------------------
+
+Entrada: 40, Código: C07, Lexeme: faca
+Pré-truncagem: 4, Pós-truncagem: 4
+Tipo: variavel, Linhas: [26]
+--------------------------------------------------
+
+Entrada: 41, Código: B16, Lexeme: +
 Pré-truncagem: 1, Pós-truncagem: 1
-Tipo: reservedWord, Linhas: [23, 24]
+Tipo: reservedWord, Linhas: [28]
+--------------------------------------------------
+
+Entrada: 42, Código: C03, Lexeme: 1
+Pré-truncagem: 1, Pós-truncagem: 1
+Tipo: consInteiro, Linhas: [28]
+--------------------------------------------------
+
+Entrada: 43, Código: C07, Lexeme: def
+Pré-truncagem: 3, Pós-truncagem: 3
+Tipo: variavel, Linhas: [31]
+--------------------------------------------------
+
+Entrada: 44, Código: C07, Lexeme: main
+Pré-truncagem: 4, Pós-truncagem: 4
+Tipo: variavel, Linhas: [31]
+--------------------------------------------------
+
+Entrada: 45, Código: C07, Lexeme: '''parser
+Pré-truncagem: 9, Pós-truncagem: 9
+Tipo: variavel, Linhas: [32]
+--------------------------------------------------
+
+Entrada: 46, Código: C07, Lexeme: argparse.argumentparser
+Pré-truncagem: 23, Pós-truncagem: 23
+Tipo: variavel, Linhas: [32]
+--------------------------------------------------
+
+Entrada: 47, Código: C07, Lexeme: description=
+Pré-truncagem: 12, Pós-truncagem: 12
+Tipo: variavel, Linhas: [32]
+--------------------------------------------------
+
+Entrada: 48, Código: C01, Lexeme: "processa um arquivo de texto"
+Pré-truncagem: 31, Pós-truncagem: 30
+Tipo: consCadeia, Linhas: [32]
+--------------------------------------------------
+
+Entrada: 49, Código: C07, Lexeme: initialize
+Pré-truncagem: 10, Pós-truncagem: 10
+Tipo: variavel, Linhas: [32]
+--------------------------------------------------
+
+Entrada: 50, Código: C07, Lexeme: parser
+Pré-truncagem: 6, Pós-truncagem: 6
+Tipo: variavel, Linhas: [32]
+--------------------------------------------------
+
+Entrada: 51, Código: C07, Lexeme: parser.add_argument
+Pré-truncagem: 19, Pós-truncagem: 19
+Tipo: variavel, Linhas: [33]
+--------------------------------------------------
+
+Entrada: 52, Código: C01, Lexeme: "file"
+Pré-truncagem: 6, Pós-truncagem: 6
+Tipo: consCadeia, Linhas: [33]
+--------------------------------------------------
+
+Entrada: 53, Código: C07, Lexeme: help=
+Pré-truncagem: 5, Pós-truncagem: 5
+Tipo: variavel, Linhas: [33]
+--------------------------------------------------
+
+Entrada: 54, Código: C01, Lexeme: "caminho do arquivo a ser pro"
+Pré-truncagem: 37, Pós-truncagem: 30
+Tipo: consCadeia, Linhas: [33]
+--------------------------------------------------
+
+Entrada: 55, Código: C07, Lexeme: add
+Pré-truncagem: 3, Pós-truncagem: 3
+Tipo: variavel, Linhas: [33]
+--------------------------------------------------
+
+Entrada: 56, Código: C07, Lexeme: argument
+Pré-truncagem: 8, Pós-truncagem: 8
+Tipo: variavel, Linhas: [33]
+--------------------------------------------------
+
+Entrada: 57, Código: C07, Lexeme: file
+Pré-truncagem: 4, Pós-truncagem: 4
+Tipo: variavel, Linhas: [33]
+--------------------------------------------------
+
+Entrada: 58, Código: C07, Lexeme: to
+Pré-truncagem: 2, Pós-truncagem: 2
+Tipo: variavel, Linhas: [33]
+--------------------------------------------------
+
+Entrada: 59, Código: C07, Lexeme: the
+Pré-truncagem: 3, Pós-truncagem: 3
+Tipo: variavel, Linhas: [33, 34]
+--------------------------------------------------
+
+Entrada: 60, Código: C07, Lexeme: parse
+Pré-truncagem: 5, Pós-truncagem: 5
+Tipo: variavel, Linhas: [33]
+--------------------------------------------------
+
+Entrada: 61, Código: C07, Lexeme: args
+Pré-truncagem: 4, Pós-truncagem: 4
+Tipo: variavel, Linhas: [34]
+--------------------------------------------------
+
+Entrada: 62, Código: C07, Lexeme: parser.parse_args
+Pré-truncagem: 17, Pós-truncagem: 17
+Tipo: variavel, Linhas: [34]
+--------------------------------------------------
+
+Entrada: 63, Código: C07, Lexeme: analyze
+Pré-truncagem: 7, Pós-truncagem: 7
+Tipo: variavel, Linhas: [34]
+--------------------------------------------------
+
+Entrada: 64, Código: C07, Lexeme: give
+Pré-truncagem: 4, Pós-truncagem: 4
+Tipo: variavel, Linhas: [34]
+--------------------------------------------------
+
+Entrada: 65, Código: C07, Lexeme: in
+Pré-truncagem: 2, Pós-truncagem: 2
+Tipo: variavel, Linhas: [34]
+--------------------------------------------------
+
+Entrada: 66, Código: C07, Lexeme: cli'''
+Pré-truncagem: 6, Pós-truncagem: 6
+Tipo: variavel, Linhas: [34]
+--------------------------------------------------
+
+Entrada: 67, Código: C07, Lexeme: file_path
+Pré-truncagem: 9, Pós-truncagem: 9
+Tipo: variavel, Linhas: [36]
+--------------------------------------------------
+
+Entrada: 68, Código: C07, Lexeme: r
+Pré-truncagem: 1, Pós-truncagem: 1
+Tipo: variavel, Linhas: [36]
+--------------------------------------------------
+
+Entrada: 69, Código: C01, Lexeme: "c:usersreisbonedrivedocument"
+Pré-truncagem: 41, Pós-truncagem: 30
+Tipo: consCadeia, Linhas: [36]
 --------------------------------------------------
