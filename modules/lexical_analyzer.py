@@ -16,6 +16,8 @@ LexReport = [
 ]
 
 validTokens = [
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -126,28 +128,28 @@ def alternate_scan(file_path):
         skip_line = False
 
         for i, letter in enumerate(line):
-            if isValidTokenForLanguage(letter.upper()):
+            if isValidTokenForLanguage(letter):
                 if skip_line:
                     break
-                if test_string(letter.upper()): 
+                if test_string(letter): 
                     if flag_string: 
-                        atom += letter.upper()
+                        atom += letter
                         process_atom(atom, lineNumber)
                         atom = ''
                     else:
                         if atom:
                             process_atom(atom, lineNumber)
                             atom = ''
-                        atom += letter.upper()
+                        atom += letter
                     flag_string = not flag_string
                     continue
                 if flag_string:
-                    atom += letter.upper()
+                    atom += letter
                     continue
                 if letter != '' and letter != '\n' and letter != '\t': 
                     if test_special_caracter(letter):
                         process_atom(atom, lineNumber)
-                        atom = letter.upper()
+                        atom = letter
                         process_atom(atom, lineNumber)
                         atom = ''
                     elif letter == ' ':
@@ -157,11 +159,11 @@ def alternate_scan(file_path):
                     elif letter == ',' or letter == ';':
                         if atom:
                             process_atom(atom, lineNumber)
-                        atom = letter.upper()
+                        atom = letter
                         process_atom(atom, lineNumber)
                         atom = ''
                     else:       
-                        atom += letter.upper()
+                        atom += letter
             if atom:
                 process_atom(atom, lineNumber)
                 atom = ''
